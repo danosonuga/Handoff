@@ -1,0 +1,40 @@
+.button {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8);
+  height: 40px;
+  padding: var(--space-12) var(--space-14);
+  border: 0;
+  border-radius: var(--radius-md);
+  background: var(--color-button-primary);
+  box-shadow: var(--shadow-button-inset);
+  color: var(--color-text-on-solid-bg);
+  font: var(--type-button-large);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+/* Figma trims the label box to cap height, which centres the text optically. */
+.label {
+  text-box: trim-both cap alphabetic;
+}
+
+/* Figma state "Clicked" — visual only while pressed. */
+.button:active:not(:disabled) {
+  background: var(--color-button-primary-clicked);
+  box-shadow: none;
+}
+
+.button:disabled {
+  background: var(--color-button-disabled);
+  box-shadow: none;
+  color: var(--color-text-disabled);
+  cursor: not-allowed;
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--color-button-primary-clicked);
+  outline-offset: 2px;
+}

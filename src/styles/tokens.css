@@ -1,0 +1,66 @@
+/*
+ * Design tokens — mirrored from Figma variables and text styles
+ * (file hiZ7TLrohRMQJ7PcOBhf2f, frame "V1" 15:3, Button states 29:447).
+ * Figma name is noted beside each token so design updates map 1:1.
+ */
+:root {
+  /* Colour — Text */
+  --color-text-default: #2c3237; /* Text/default */
+  --color-text-neutral: #656f78; /* Text/neutral */
+  --color-text-on-solid-bg: #ffffff; /* Text/on-solid-bg */
+  --color-text-disabled: #a0acb6; /* Text/disabled */
+
+  /* Colour — Icons */
+  --color-icon-on-solid-bg: #ffffff; /* Icons/on-solid-bg */
+  --color-icon-neutral: #656f78; /* Icons/neutral (confirmed in review; not bound in V1 frame) */
+
+  /* Colour — Background */
+  --color-bg-canvas: #ffffff; /* Background/canvas */
+  --color-bg-on-canvas: #f9fafa; /* Background/on-canvas */
+  --color-bg-default: #edf0f2; /* Background/default */
+  --color-bg-secondary: #ff7415; /* Background/secondary, Secondary/secondary_100 */
+
+  /* Colour — Buttons */
+  --color-button-primary: #2ea1fe; /* Buttons/primary */
+  --color-button-primary-clicked: #19598c; /* Buttons/primary-clicked */
+  --color-button-disabled: #e1e5ea; /* Buttons/disabled */
+
+  /* Typography — SF Pro with system fallbacks (see README: substitutions) */
+  --font-family-base: 'SF Pro Text', 'SF Pro', -apple-system, BlinkMacSystemFont, system-ui,
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+  /* weight size/line-height family */
+  --type-small-bold: 590 14px / 22px var(--font-family-base); /* Small/Bold */
+  --type-button-large: 590 14px / 22px var(--font-family-base); /* Button/Large */
+  --type-micro-bold: 590 12px / 20px var(--font-family-base); /* Micro/Bold */
+  --type-micro-medium: 510 12px / 20px var(--font-family-base); /* Micro/Medium */
+  --type-micro-regular: 400 12px / 20px var(--font-family-base); /* Micro/Regular */
+  --type-caps: 510 10px / 20px var(--font-family-base); /* CAPS */
+  --type-caps-tracking: 1px; /* CAPS letter spacing */
+
+  /* Spacing — values used by the Figma auto-layout */
+  --space-2: 2px;
+  --space-8: 8px;
+  --space-10: 10px;
+  --space-12: 12px;
+  --space-14: 14px;
+  --space-16: 16px;
+
+  /* Radii */
+  --radius-xs: 4px; /* logo tile */
+  --radius-md: 12px; /* stat panel, button */
+  --radius-lg: 16px; /* hero media */
+  --radius-xl: 20px; /* card */
+  --radius-track: 32px; /* progress track */
+  --radius-full: 9999px; /* pill */
+
+  /* Elevation */
+  --shadow-card: 0 0 0 1px rgb(44 50 55 / 0.12), 0 16px 16px -8px rgb(44 50 55 / 0.04),
+    0 8px 8px -4px rgb(44 50 55 / 0.04), 0 4px 4px -2px rgb(44 50 55 / 0.04),
+    0 2px 2px -1px rgb(44 50 55 / 0.04), 0 1px 1px -0.5px rgb(44 50 55 / 0.04);
+  --shadow-logo: 0 25.6px 25.6px -12.8px rgb(44 50 55 / 0.04),
+    0 12.8px 12.8px -6.4px rgb(44 50 55 / 0.04), 0 6.4px 6.4px -3.2px rgb(44 50 55 / 0.04),
+    0 3.2px 3.2px -1.6px rgb(44 50 55 / 0.04), 0 1.6px 1.6px -0.8px rgb(44 50 55 / 0.04),
+    0 0 0 1.6px rgb(44 50 55 / 0.08);
+  --shadow-button-inset: inset 0 -2px 1px 0 rgb(25 89 140 / 0.5);
+}

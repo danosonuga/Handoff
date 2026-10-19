@@ -1,0 +1,15 @@
+.pill {
+  /* Text/default at 60% — not a Figma variable, applied as a raw fill. */
+  --pill-bg: rgb(44 50 55 / 0.6);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  padding-inline: var(--space-10);
+  border-radius: var(--radius-full);
+  background: var(--pill-bg);
+  color: var(--color-text-on-solid-bg);
+  font: var(--type-micro-medium);
+  white-space: nowrap;
+}
