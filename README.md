@@ -171,7 +171,7 @@ All tokens are in [`src/styles/tokens.css`](src/styles/tokens.css), each comment
 | Card CTA | `--color-cta-volunteer` (#622efe), `--color-cta-volunteer-pressed`, `--shadow-cta-volunteer-inset` | #622efe is a raw Figma fill; **the pressed colour and shadow are derived** (see [Design provenance](#design-provenance)) |
 | Typography | `--type-{small-bold,button-large,micro-bold,micro-medium,micro-regular,caps}`, `--type-caps-tracking` | Figma text styles, written as the CSS `font` shorthand |
 | Spacing | `--space-{2,8,10,12,14,16}` | Auto-layout gaps and padding |
-| Radii | `--radius-{xs,md,lg,xl,track,full}` | 4 / 12 / 16 / 20 / 32 / 9999 px |
+| Radii | `--radius-{xs,md,lg,xl,track,full}` | 4 / 12 / 16 / 24 / 32 / 9999 px |
 | Elevation | `--shadow-{card,logo,button-inset}` | Figma drop shadows |
 | Motion | `--learn-*`, `--pulse-*`, `--reveal-*`, `--resize-*`, `--digit-*` | transitions.dev defaults (not in Figma) |
 
@@ -278,6 +278,12 @@ Code Connect isn't set up in the Figma file.
 | 6 | Button fill | `#2ea1fe` → `#622efe` (this button only) | `tokens.css`, `CauseCard.module.css` `.cta`, `Button.module.css` |
 | 7 | Button label | "Join Cause" → "Join as a volunteer" | `CauseCard.tsx` |
 | 8 | Title | adds "in Lagos state nigeria" | `data/cause.ts` |
+
+**V2 revision** (the V2 frame was edited in place; the old value comes from git, because Figma has no version history)
+
+| # | Change | Before → after | Code |
+|---|---|---|---|
+| 9 | Card corner radius | 20 → 24 px (raw in Figma). The card's 8px padding now makes it exactly concentric with the photo's 16px corners. | `tokens.css` `--radius-xl` (used only by the card) |
 
 To see any step's changes, diff two commits from the table above (for example, `git diff 680e95e cf12efb`).
 

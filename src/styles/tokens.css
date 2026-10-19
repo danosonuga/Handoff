@@ -55,7 +55,7 @@
   --radius-xs: 4px; /* logo tile */
   --radius-md: 12px; /* stat panel, button */
   --radius-lg: 16px; /* hero media */
-  --radius-xl: 20px; /* card */
+  --radius-xl: 24px; /* card (raw in Figma; V2 revision: was 20px) */
   --radius-track: 32px; /* progress track */
   --radius-full: 9999px; /* pill */
 
