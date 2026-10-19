@@ -257,6 +257,7 @@ Code Connect isn't set up in the Figma file.
 | `cf12efb` V2 — Figma update | Figma V2 (24:217): taller photo, one-row stats, solid progress, purple CTA, new copy |
 | `3171701` Motion — transitions.dev | Arrow hover, photo reveal, progress resize, number pop-in |
 | `7895bb2` Motion — progress load-in | Progress fill animates in on load |
+| `24f7cd2` Docs — developer README | README restructured for engineers; Node requirement corrected |
 
 **V1 → V2 changes in detail**
 
