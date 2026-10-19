@@ -145,7 +145,7 @@ The Figma frames contain no motion, so all motion here is a design addition. It 
 |---|---|---|
 | 24 Learn more hover | `Button` trailing arrow (`t-learn`, `t-learn-chevron`) | Arrow eases 2px right on hover (350ms); none when disabled |
 | 14 Skeleton loader and reveal | `CauseCardMedia` (`t-skel`) | The placeholder pulses once while the photo loads, then cross-fades to the photo with a 2px → 0 blur (400ms). Instant if the photo is already decoded; static placeholder if it fails. |
-| 01 Card resize | `ProgressBar` fill (`t-resize`) | Width tweens when the joined count changes (300ms) |
+| 01 Card resize | `ProgressBar` fill (`t-resize`) | Loads in from 0 to its value on first render, and tweens whenever the joined count changes (300ms). The fill renders at 0 for one frame, then moves to the real value, which triggers the recipe's width transition. |
 | 02 Number pop-in | `AnimatedNumber` in the pill and the stats panel | Changed digits rise in with blur (500ms); nothing animates on first render |
 
 **Where the code lives**
@@ -161,7 +161,7 @@ The Figma frames contain no motion, so all motion here is a design addition. It 
 
 - **Arrow.** The learn-more recipe expects a two-path chevron whose arms spread apart. The Figma arrow is a single-path icon rendered as a mask, so only the 2px slide applies. The arm rules are kept verbatim but match nothing.
 - **Screen readers.** `AnimatedNumber` splits digits into spans, so it also renders the whole number in a visually hidden span and hides the digit spans from screen readers.
-- **Static data.** The progress tween and number pop-in only show when `volunteersJoined` or `volunteerGoal` changes. The sample data is static, so they are idle until the card receives live data.
+- **Static data.** Number pop-in only shows when `volunteersJoined` or `volunteerGoal` changes, so it is idle until the card receives live data. The progress fill also loads in on first render.
 
 ## V2 changes
 
