@@ -31,6 +31,11 @@
 
 /* Project: a disabled button should not acknowledge hover. */
 .t-learn:disabled:hover .t-learn-chevron { transform: none; }
+/* Project: touch screens keep :hover after a tap; rest the arrow there,
+   as the recipe intends ("touch falls back to the resting state"). */
+@media (hover: none) {
+  .t-learn:hover .t-learn-chevron { transform: none; }
+}
 
 /* ---------- 14 Skeleton loader and reveal ---------- */
 /* The wrap stacks two layers on the same coordinates. The

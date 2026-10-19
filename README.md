@@ -64,6 +64,11 @@ CauseCard                      layout, logo overlap, CTA colour
   1. Props, or a `className` on the child's root. For example, `CauseCard` sets the overlap margin on `CauseCardMedia`.
   2. Documented CSS custom properties. For example, `CauseCard` sets `--button-bg` on `Button`.
 - **Layout is Flexbox.** Absolute positioning is used only for the pill over the photo and the stacked reveal layers inside the photo.
+- **Responsive by default:**
+  - **Widths:** the card is `width: 100%; max-width: 368px` inside a 16px page gutter, so it's exactly the Figma size from about 400px up and shrinks below that. The photo keeps its aspect ratio.
+  - **Checked sizes:** 280–430px phones, 768px tablet, and 667×375 / 844×390 landscape. No sideways scrolling at any of them; on short landscape screens the page scrolls vertically.
+  - **Touch:** there's no sticky hover nudge, no Android tap flash, and iOS doesn't enlarge text in landscape (`text-size-adjust` in `global.css`).
+  - **Tap target:** the button is 40px tall, as designed. That passes WCAG 2.2 AA (24px minimum) but is under Apple's 44pt guideline.
 - **Semantic markup:** `<article>`, `<header>`, `<h3>`, a `<dl>` for the stat, a native `<button>`, and `role="progressbar"` with values.
 
 ## Common changes
@@ -104,7 +109,9 @@ CauseCard                      layout, logo overlap, CTA colour
    - A failed photo unmounts the `<img>` and leaves the static placeholder.
 5. **`ProgressBar` renders at 0% for one frame.** It switches to the real value on the next animation frame so the width transition plays on load. Screen readers get the real value (`aria-valuenow`) from the first render.
 6. **The stat row is visually reversed.** `StatPanel` keeps label before value in the markup, so screen readers announce "Volunteers needed: 20", while `flex-direction: row-reverse` shows the value on the left. Reorder with CSS, not markup.
-7. **The arrow hover only applies to buttons with a `trailingIcon`.** `Button` adds `t-learn` only then. It is suppressed on disabled buttons by a project rule at the end of the learn-more section in `transitions.css`.
+7. **The arrow hover only applies to buttons with a `trailingIcon`.** `Button` adds `t-learn` only then. Two project rules at the end of the learn-more section in `transitions.css` suppress it:
+   - on disabled buttons
+   - on touch screens (`@media (hover: none)`), where `:hover` sticks after a tap
 8. **Pressed is visual only.** The "clicked" state is `:active`. Nothing persists after a click unless you build it.
 9. **Animations respect reduced motion.** Every recipe keeps a `@media (prefers-reduced-motion: reduce)` block. Leave it in place when editing.
 
