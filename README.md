@@ -33,8 +33,9 @@ src/
 ├── main.tsx                  # entry; loads tokens + global styles
 ├── App.tsx / App.module.css  # stands in for the 1440×1024 Figma canvas
 ├── styles/
-│   ├── tokens.css            # design tokens as CSS variables
-│   └── global.css            # minimal reset, font, body background
+│   ├── tokens.css            # design tokens as CSS variables (incl. motion)
+│   ├── global.css            # minimal reset, font, body background
+│   └── transitions.css       # transitions.dev recipes (global t-* classes)
 ├── assets/                   # images and icons (see "Assets")
 ├── data/cause.ts             # sample content (from the V2 frame)
 └── components/
@@ -46,7 +47,8 @@ src/
     ├── StatPanel/            # value + caps label row, supporting content
     ├── ProgressBar/          # continuous joined / goal bar
     ├── Button/               # Figma "Button" instance (default / clicked / disabled)
-    └── Icon/                 # renders a single-colour SVG in currentColor
+    ├── Icon/                 # renders a single-colour SVG in currentColor
+    └── AnimatedNumber/       # number pop-in when a count changes
 ```
 
 Each component owns one `.tsx` and one `.module.css` file. Components only read shared values from `tokens.css` and never style each other's internals. A parent influences a child in two ways:
@@ -134,6 +136,32 @@ Figma MCP asset URLs expire after about 7 days, so every asset is committed to t
   - White text on `#35198c` has a contrast ratio of 12.6:1.
   - These values should be added to Figma as variables.
 - **Title copy (V2)** is taken verbatim from Figma ("Lagos state nigeria"), as agreed.
+
+## Motion (transitions.dev)
+
+The Figma frames contain no motion, so all motion here is a design addition. It uses four recipes from the [transitions.dev skill](https://github.com/Jakubantalik/transitions.dev/tree/main/skills/transitions-dev), used under the Transitions.dev License: free for personal and commercial use, with no redistribution as a library.
+
+| Recipe | Element | Behaviour |
+|---|---|---|
+| 24 Learn more hover | `Button` trailing arrow (`t-learn`, `t-learn-chevron`) | Arrow eases 2px right on hover (350ms); none when disabled |
+| 14 Skeleton loader and reveal | `CauseCardMedia` (`t-skel`) | The placeholder pulses once while the photo loads, then cross-fades to the photo with a 2px → 0 blur (400ms). Instant if the photo is already decoded; static placeholder if it fails. |
+| 01 Card resize | `ProgressBar` fill (`t-resize`) | Width tweens when the joined count changes (300ms) |
+| 02 Number pop-in | `AnimatedNumber` in the pill and the stats panel | Changed digits rise in with blur (500ms); nothing animates on first render |
+
+**Where the code lives**
+
+- **Recipe CSS:** pasted verbatim into `src/styles/transitions.css`. The recipes use global `t-*` classes, so they don't go in CSS Modules. One project addition is marked in the file: no hover nudge on disabled buttons.
+- **Tunable variables:** in the **Motion** section of `tokens.css`. Only the variables these four recipes use are included, not the skill's full `_root.css`.
+- **JavaScript:** the recipes' small orchestration snippets are adapted to React state.
+  - `CauseCardMedia` tracks the photo's load state, checking for an already-decoded photo once per URL.
+  - `AnimatedNumber` replays `.is-animating` with a forced reflow, as the recipe documents.
+- **Reduced motion:** every recipe keeps its `prefers-reduced-motion: reduce` guard.
+
+**Adaptations**
+
+- **Arrow.** The learn-more recipe expects a two-path chevron whose arms spread apart. The Figma arrow is a single-path icon rendered as a mask, so only the 2px slide applies. The arm rules are kept verbatim but match nothing.
+- **Screen readers.** `AnimatedNumber` splits digits into spans, so it also renders the whole number in a visually hidden span and hides the digit spans from screen readers.
+- **Static data.** The progress tween and number pop-in only show when `volunteersJoined` or `volunteerGoal` changes. The sample data is static, so they are idle until the card receives live data.
 
 ## V2 changes
 

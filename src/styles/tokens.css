@@ -70,4 +70,36 @@
   --shadow-button-inset: inset 0 -2px 1px 0 rgb(25 89 140 / 0.5);
   /* Derived: same inset using --color-cta-volunteer-pressed at 50% (Figma V2 still shows the blue inset). */
   --shadow-cta-volunteer-inset: inset 0 -2px 1px 0 rgb(53 25 140 / 0.5);
+
+  /*
+   * Motion — transitions.dev defaults (not from Figma; the design has no motion).
+   * Only the variables used by the installed recipes; see src/styles/transitions.css.
+   */
+  /* 24 Learn more hover — button trailing arrow */
+  --learn-shift: 2px;
+  --learn-spread: 8deg;
+  --learn-in: 350ms;
+  --learn-out: 350ms;
+  --learn-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* 14 Skeleton loader and reveal — hero photo */
+  --pulse-dur: 1000ms;
+  --pulse-count: 1;
+  --pulse-min: 0.5;
+  --reveal-dur: 400ms;
+  --reveal-blur: 2px;
+  --reveal-ease: ease-in-out;
+
+  /* 01 Card resize — progress fill */
+  --resize-dur: 300ms;
+  --resize-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* 02 Number pop-in — volunteer counts */
+  --digit-dur: 500ms;
+  --digit-distance: 8px;
+  --digit-stagger: 70ms;
+  --digit-blur: 2px;
+  --digit-ease: cubic-bezier(0.34, 1.45, 0.64, 1);
+  --digit-dir-x: 0;
+  --digit-dir-y: 1;
 }

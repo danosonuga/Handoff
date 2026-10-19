@@ -1,4 +1,5 @@
 import arrowRight from '../../assets/arrow-right.svg';
+import { AnimatedNumber } from '../AnimatedNumber/AnimatedNumber';
 import { Button } from '../Button/Button';
 import { CauseCardMedia } from '../CauseCardMedia/CauseCardMedia';
 import { OrgByline } from '../OrgByline/OrgByline';
@@ -29,7 +30,7 @@ type CauseCardProps = {
   onCtaClick?: () => void;
 };
 
-const volunteers = (count: number) => `${count} ${count === 1 ? 'volunteer' : 'volunteers'}`;
+const volunteerNoun = (count: number) => (count === 1 ? 'volunteer' : 'volunteers');
 
 /** Figma frame "V2" (24:247) — volunteering cause card. */
 export function CauseCard({ cause, ctaLabel = 'Join as a volunteer', ctaDisabled, onCtaClick }: CauseCardProps) {
@@ -41,7 +42,14 @@ export function CauseCard({ cause, ctaLabel = 'Join as a volunteer', ctaDisabled
         className={styles.media}
         src={imageSrc}
         alt={imageAlt}
-        overlay={<Pill>{volunteers(volunteersJoined)} joined</Pill>}
+        overlay={
+          <Pill>
+            {/* One inline wrapper, so the flex pill keeps the space before the noun. */}
+            <span>
+              <AnimatedNumber value={volunteersJoined} /> {volunteerNoun(volunteersJoined)} joined
+            </span>
+          </Pill>
+        }
       />
 
       <div className={styles.body}>
@@ -53,7 +61,7 @@ export function CauseCard({ cause, ctaLabel = 'Join as a volunteer', ctaDisabled
           </div>
         </header>
 
-        <StatPanel label="Volunteers needed" value={String(volunteerGoal)}>
+        <StatPanel label="Volunteers needed" value={<AnimatedNumber value={volunteerGoal} />}>
           <ProgressBar value={volunteersJoined} max={volunteerGoal} label="Volunteers joined" />
         </StatPanel>
 

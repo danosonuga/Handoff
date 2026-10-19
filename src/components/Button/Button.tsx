@@ -23,10 +23,15 @@ export function Button({
   ...rest
 }: ButtonProps) {
   return (
-    <button type={type} className={[styles.button, className].filter(Boolean).join(' ')} {...rest}>
+    <button
+      type={type}
+      // t-learn: transitions.dev "Learn more hover" — nudges the trailing icon on hover.
+      className={[styles.button, trailingIcon && 't-learn', className].filter(Boolean).join(' ')}
+      {...rest}
+    >
       {leadingIcon && <Icon src={leadingIcon} />}
       <span className={styles.label}>{children}</span>
-      {trailingIcon && <Icon src={trailingIcon} />}
+      {trailingIcon && <Icon src={trailingIcon} className="t-learn-chevron" />}
     </button>
   );
 }

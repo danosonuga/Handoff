@@ -3,7 +3,7 @@ import styles from './StatPanel.module.css';
 
 type StatPanelProps = {
   label: string;
-  value: string;
+  value: ReactNode;
   /** Supporting content below the stat, e.g. a progress bar. */
   children?: ReactNode;
 };

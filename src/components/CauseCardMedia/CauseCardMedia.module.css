@@ -1,5 +1,8 @@
 .media {
   position: relative;
+  /* Keeps the reveal layers' z-index inside the media, so content that
+     overlaps it (the card's logo) still paints on top. */
+  isolation: isolate;
   flex-shrink: 0;
   width: 100%;
   /* 352 × 195 in Figma; keeps proportions when the card narrows. */
@@ -26,6 +29,8 @@
 
 .overlay {
   position: absolute;
+  /* Above the reveal layers (.t-skel-skeleton z 1, .t-skel-content z 2). */
+  z-index: 3;
   top: var(--space-16);
   left: var(--space-16);
 }

@@ -24,7 +24,8 @@ export function ProgressBar({ value, max, label }: ProgressBarProps) {
       aria-valuetext={`${value} of ${max}`}
     >
       <div className={styles.track}>
-        <div className={styles.fill} style={style} />
+        {/* t-resize: transitions.dev "Card resize" — tweens the fill when the value changes. */}
+        <div className={`${styles.fill} t-resize`} style={style} />
       </div>
     </div>
   );
