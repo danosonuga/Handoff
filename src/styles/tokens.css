@@ -25,6 +25,11 @@
   --color-button-primary-clicked: #19598c; /* Buttons/primary-clicked */
   --color-button-disabled: #e1e5ea; /* Buttons/disabled */
 
+  /* Colour — Cause card CTA (V2). Raw fill on Button 24:274, not a Figma variable. */
+  --color-cta-volunteer: #622efe;
+  /* Derived: Buttons/primary-clicked shifted to the V2 hue (not in Figma). */
+  --color-cta-volunteer-pressed: #35198c;
+
   /* Typography — SF Pro with system fallbacks (see README: substitutions) */
   --font-family-base: 'SF Pro Text', 'SF Pro', -apple-system, BlinkMacSystemFont, system-ui,
     'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -63,4 +68,6 @@
     0 3.2px 3.2px -1.6px rgb(44 50 55 / 0.04), 0 1.6px 1.6px -0.8px rgb(44 50 55 / 0.04),
     0 0 0 1.6px rgb(44 50 55 / 0.08);
   --shadow-button-inset: inset 0 -2px 1px 0 rgb(25 89 140 / 0.5);
+  /* Derived: same inset using --color-cta-volunteer-pressed at 50% (Figma V2 still shows the blue inset). */
+  --shadow-cta-volunteer-inset: inset 0 -2px 1px 0 rgb(53 25 140 / 0.5);
 }

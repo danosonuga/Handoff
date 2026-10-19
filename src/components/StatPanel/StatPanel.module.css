@@ -12,10 +12,15 @@
   backdrop-filter: blur(6px);
 }
 
+/* Value shows left, label right; source order stays label → value for screen readers. */
 .stat {
   display: flex;
-  flex-direction: column;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
   margin: 0;
+  white-space: nowrap;
 }
 
 .label {

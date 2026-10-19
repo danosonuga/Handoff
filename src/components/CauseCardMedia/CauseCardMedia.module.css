@@ -2,8 +2,8 @@
   position: relative;
   flex-shrink: 0;
   width: 100%;
-  /* 352 × 153 in Figma; keeps proportions when the card narrows. */
-  aspect-ratio: 352 / 153;
+  /* 352 × 195 in Figma; keeps proportions when the card narrows. */
+  aspect-ratio: 352 / 195;
   overflow: hidden;
   border-radius: var(--radius-lg);
 }

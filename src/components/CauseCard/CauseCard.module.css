@@ -27,13 +27,6 @@
   padding: 0 var(--space-16) var(--space-16);
 }
 
-.content {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-8);
-  width: 100%;
-}
-
 .header {
   display: flex;
   flex-direction: column;
@@ -59,4 +52,11 @@
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   line-clamp: 2;
+}
+
+/* V2 overrides the Figma Button fill on this card only (Buttons/primary is unchanged). */
+.cta {
+  --button-bg: var(--color-cta-volunteer);
+  --button-bg-pressed: var(--color-cta-volunteer-pressed);
+  --button-shadow: var(--shadow-cta-volunteer-inset);
 }

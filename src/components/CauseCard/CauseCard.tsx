@@ -31,8 +31,8 @@ type CauseCardProps = {
 
 const volunteers = (count: number) => `${count} ${count === 1 ? 'volunteer' : 'volunteers'}`;
 
-/** Figma frame "V1" (15:88) — volunteering cause card. */
-export function CauseCard({ cause, ctaLabel = 'Join Cause', ctaDisabled, onCtaClick }: CauseCardProps) {
+/** Figma frame "V2" (24:247) — volunteering cause card. */
+export function CauseCard({ cause, ctaLabel = 'Join as a volunteer', ctaDisabled, onCtaClick }: CauseCardProps) {
   const { title, imageSrc, imageAlt, org, volunteersJoined, volunteerGoal } = cause;
 
   return (
@@ -45,21 +45,19 @@ export function CauseCard({ cause, ctaLabel = 'Join Cause', ctaDisabled, onCtaCl
       />
 
       <div className={styles.body}>
-        <div className={styles.content}>
-          <header className={styles.header}>
-            <OrgLogo src={org.logoSrc} alt={org.logoAlt} />
-            <div className={styles.heading}>
-              <OrgByline name={org.name} verified={org.verified} />
-              <h3 className={styles.title}>{title}</h3>
-            </div>
-          </header>
+        <header className={styles.header}>
+          <OrgLogo src={org.logoSrc} alt={org.logoAlt} />
+          <div className={styles.heading}>
+            <OrgByline name={org.name} verified={org.verified} />
+            <h3 className={styles.title}>{title}</h3>
+          </div>
+        </header>
 
-          <StatPanel label="Volunteers" value={volunteers(volunteerGoal)}>
-            <ProgressBar value={volunteersJoined} max={volunteerGoal} label="Volunteers joined" />
-          </StatPanel>
-        </div>
+        <StatPanel label="Volunteers needed" value={String(volunteerGoal)}>
+          <ProgressBar value={volunteersJoined} max={volunteerGoal} label="Volunteers joined" />
+        </StatPanel>
 
-        <Button trailingIcon={arrowRight} disabled={ctaDisabled} onClick={onCtaClick}>
+        <Button className={styles.cta} trailingIcon={arrowRight} disabled={ctaDisabled} onClick={onCtaClick}>
           {ctaLabel}
         </Button>
       </div>

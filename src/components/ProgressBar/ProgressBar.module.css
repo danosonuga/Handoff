@@ -14,8 +14,8 @@
 }
 
 .fill {
-  /* Gradient end stop is a raw Figma value, not a variable. */
-  --progress-fill: linear-gradient(to right, var(--color-bg-secondary), #8c400c);
+  /* Figma uses raw #ff7415, the same value as Background/secondary. */
+  --progress-fill: var(--color-bg-secondary);
 
   width: var(--progress);
   height: 100%;
