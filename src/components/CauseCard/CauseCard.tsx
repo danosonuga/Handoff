@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import arrowRight from '../../assets/arrow-right.svg';
+import checkIcon from '../../assets/check.svg';
 import { AnimatedNumber } from '../AnimatedNumber/AnimatedNumber';
 import { Button } from '../Button/Button';
 import { CauseCardMedia } from '../CauseCardMedia/CauseCardMedia';
@@ -26,6 +28,8 @@ export type Cause = {
 type CauseCardProps = {
   cause: Cause;
   ctaLabel?: string;
+  /** Label once joined; the button then becomes disabled. */
+  ctaJoinedLabel?: string;
   ctaDisabled?: boolean;
   onCtaClick?: () => void;
 };
@@ -33,8 +37,20 @@ type CauseCardProps = {
 const volunteerNoun = (count: number) => (count === 1 ? 'volunteer' : 'volunteers');
 
 /** Figma frame "V2" (24:247) — volunteering cause card. */
-export function CauseCard({ cause, ctaLabel = 'Join as a volunteer', ctaDisabled, onCtaClick }: CauseCardProps) {
+export function CauseCard({
+  cause,
+  ctaLabel = 'Join as a volunteer',
+  ctaJoinedLabel = 'Joined',
+  ctaDisabled,
+  onCtaClick,
+}: CauseCardProps) {
   const { title, imageSrc, imageAlt, org, volunteersJoined, volunteerGoal } = cause;
+  // Visual state only: no join workflow or data change.
+  const [joined, setJoined] = useState(false);
+  const handleCtaClick = () => {
+    setJoined(true);
+    onCtaClick?.();
+  };
 
   return (
     <article className={styles.card}>
@@ -65,8 +81,15 @@ export function CauseCard({ cause, ctaLabel = 'Join as a volunteer', ctaDisabled
           <ProgressBar value={volunteersJoined} max={volunteerGoal} label="Volunteers joined" />
         </StatPanel>
 
-        <Button className={styles.cta} trailingIcon={arrowRight} disabled={ctaDisabled} onClick={onCtaClick}>
-          {ctaLabel}
+        <Button
+          className={styles.cta}
+          // Joined: the arrow swaps out and a check swaps in before the label.
+          leadingIcon={joined ? checkIcon : undefined}
+          trailingIcon={joined ? undefined : arrowRight}
+          disabled={ctaDisabled || joined}
+          onClick={handleCtaClick}
+        >
+          {joined ? ctaJoinedLabel : ctaLabel}
         </Button>
       </div>
     </article>

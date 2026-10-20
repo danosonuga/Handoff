@@ -19,6 +19,32 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+/* Icon slot (Figma's 16px icon slots). Project addition: when a slot closes,
+   its width eases to 0 and a negative margin cancels the flex gap, so the
+   button resizes smoothly while the icon swaps out. */
+.slot {
+  flex-shrink: 0;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  transition:
+    width var(--text-morph-resize-dur) var(--text-morph-ease),
+    margin var(--text-morph-resize-dur) var(--text-morph-ease);
+}
+.slot[data-open='false'] {
+  width: 0;
+}
+.leading[data-open='false'] {
+  margin-right: calc(-1 * var(--space-8));
+}
+.trailing[data-open='false'] {
+  margin-left: calc(-1 * var(--space-8));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slot { transition: none; }
+}
+
 /* Figma trims the label box to cap height, which centres the text optically. */
 .label {
   text-box: trim-both cap alphabetic;
@@ -35,6 +61,17 @@
   box-shadow: none;
   color: var(--color-text-disabled);
   cursor: not-allowed;
+  /* Project (not a transitions.dev recipe): ease into disabled alongside the
+     label's text morph. Declared here so only entering disabled animates;
+     the pressed state stays instant. */
+  transition:
+    background-color var(--text-morph-resize-dur) var(--text-morph-ease),
+    color var(--text-morph-resize-dur) var(--text-morph-ease),
+    box-shadow var(--text-morph-resize-dur) var(--text-morph-ease);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button:disabled { transition: none; }
 }
 
 .button:focus-visible {

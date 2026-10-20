@@ -77,7 +77,7 @@ CauseCard                      layout, logo overlap, CTA colour
 |---|---|---|
 | Change the card's text, images or counts | `src/data/cause.ts` | Typed by `Cause` in `CauseCard.tsx`. `imageSrc` is optional: leave it out to show the placeholder. |
 | Render a different cause or several cards | `src/App.tsx` | Pass any `Cause` object: `<CauseCard cause={myCause} />`. |
-| Change the button label, disable it, or handle clicks | `CauseCard` props | `ctaLabel`, `ctaDisabled`, `onCtaClick`. There is no join workflow; the button only calls `onCtaClick`. |
+| Change the button label, disable it, or handle clicks | `CauseCard` props | `ctaLabel`, `ctaJoinedLabel` (default "Joined"), `ctaDisabled`, `onCtaClick`. Clicking switches the label to `ctaJoinedLabel` and disables the button (local visual state); there is no join workflow, and the counts don't change. |
 | Change a colour, text style, spacing, radius or shadow | `src/styles/tokens.css` | Each token is commented with its Figma variable. Prefer changing a token over adding raw values in a component. |
 | Change the purple CTA (or its pressed state) | `tokens.css` → `--color-cta-volunteer*`, `--shadow-cta-volunteer-inset` | Applied only to this card's button via `.cta` in `CauseCard.module.css`. Other buttons use `--color-button-*`. |
 | Recolour any other `Button` | Set `--button-bg`, `--button-bg-pressed`, `--button-shadow` on it via a class | Unset values fall back to the primary tokens. Disabled styling always wins. |
@@ -112,14 +112,19 @@ CauseCard                      layout, logo overlap, CTA colour
 7. **The arrow hover only applies to buttons with a `trailingIcon`.** `Button` adds `t-learn` only then. Two project rules at the end of the learn-more section in `transitions.css` suppress it:
    - on disabled buttons
    - on touch screens (`@media (hover: none)`), where `:hover` sticks after a tap
-8. **Pressed is visual only.** The "clicked" state is `:active`. Nothing persists after a click unless you build it.
+8. **Click state is visual only.**
+   - The "clicked" state is `:active`.
+   - After a click, `CauseCard` holds `joined` in local state: the label morphs to "Joined", the arrow is replaced by a leading check, and the button is disabled until the page reloads.
+   - `Button` always renders both icon slots. A slot with no icon is 0 wide, with a negative margin cancelling the flex gap, so icon-less buttons look unchanged.
+   - `MorphText` owns its span's DOM (the recipe rebuilds it), so don't render children into it.
 9. **Animations respect reduced motion.** Every recipe keeps a `@media (prefers-reduced-motion: reduce)` block. Leave it in place when editing.
 
 ## Component reference
 
 | Component | Props | Purpose |
 |---|---|---|
-| `CauseCard` | `cause: Cause`, `ctaLabel?` (default "Join as a volunteer"), `ctaDisabled?`, `onCtaClick?` | Lays out the whole card |
+| `CauseCard` | `cause: Cause`, `ctaLabel?` (default "Join as a volunteer"), `ctaJoinedLabel?` (default "Joined"), `ctaDisabled?`, `onCtaClick?` | Lays out the whole card; owns the joined click state |
+| `MorphText` | `text` | Label that morphs to new text, keeping the letters the old and new text share (transitions.dev Text morph). `Button` uses it for string labels. |
 | `CauseCardMedia` | `src?`, `alt`, `overlay?: ReactNode`, `className?` | Photo with load reveal, missing/broken fallback, and a top-left overlay slot |
 | `Pill` | `children`, `className?` | Translucent dark chip |
 | `OrgLogo` | `src`, `alt` | 64px logo tile with ring and shadow |
@@ -190,6 +195,8 @@ The Figma frames contain no motion; all animation is an addition using four [tra
 | 14 Skeleton loader and reveal | `CauseCardMedia` (`t-skel`, `t-skel-skeleton`, `t-skel-content`) | Placeholder pulses once while loading, then cross-fades to the photo as a 2px blur clears (400ms). Instant if cached. | `--pulse-*`, `--reveal-*` |
 | 01 Card resize | `ProgressBar` fill (`t-resize`) | Grows in from 0 on load and tweens on value changes (300ms) | `--resize-*` |
 | 02 Number pop-in | `AnimatedNumber` (`t-digit-group`, `t-digit`) | Changed digits rise in with blur (500ms). Nothing animates on first render. | `--digit-*` |
+| 33 Text morph | `Button` label via `MorphText` (`t-morph`, `t-morph-swap`) | On click, "Join as a volunteer" → "Joined": "Join" stays, the rest cross-blurs (180ms) and the width eases (240ms). A project rule eases the button into its disabled colours over the same 240ms. | `--text-morph-*` |
+| 09 Icon swap | `Button` icon slots (`t-icon-swap`, `t-icon`) | On click, the trailing arrow swaps out and a check swaps in **before** the label (250ms, blur + scale). Project addition: each slot's width eases to or from 0 with the morph's timing, so the button resizes smoothly. | `--icon-swap-*` |
 
 **Adaptations from the recipes**
 
@@ -249,6 +256,7 @@ Code Connect isn't set up in the Figma file.
 | `org-logo.png` | Figma `Logo` image (2000×2000 PNG) |
 | `verified-badge.svg` | Figma `Badge` export (multi-colour; rendered as `<img>`) |
 | `arrow-right.svg` | Figma `arrow/arrow_right_line` export |
+| `check.svg` | Figma `system/check_fill` (path from the verified badge's check, node 24:259), shown at 16px in the joined button |
 | `image-icon.svg` | MingCute `file/pic_line` |
 
 ### Licences

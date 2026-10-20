@@ -102,4 +102,16 @@
   --digit-ease: cubic-bezier(0.34, 1.45, 0.64, 1);
   --digit-dir-x: 0;
   --digit-dir-y: 1;
+
+  /* 33 Text morph — button label "Join as a volunteer" → "Joined" */
+  --text-morph-dur: 180ms;
+  --text-morph-resize-dur: 240ms;
+  --text-morph-blur: 2px;
+  --text-morph-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* 09 Icon swap — button arrow out, check in */
+  --icon-swap-dur: 250ms;
+  --icon-swap-blur: 2px;
+  --icon-swap-start-scale: 0.25;
+  --icon-swap-ease: ease-in-out;
 }
