@@ -1,0 +1,59 @@
+/*
+ * Docs interface tokens. The design system docs are styled with the design
+ * system itself: every value below is a product token from tokens.css, a tint
+ * of one (color-mix), or a docs-only size step for things the product UI
+ * doesn't have yet (page titles, wide page gaps). No other colours or fonts.
+ */
+:root {
+  /* Type — SF Pro (--font-family-base) at the design system's weights: 400 / 510 / 590.
+     Docs-only sizes; 14px and 12px text uses the product styles directly. */
+  --docs-type-title: 590 36px / 44px var(--font-family-base);
+  --docs-type-heading: 590 28px / 36px var(--font-family-base);
+  --docs-type-heading-compact: 590 24px / 32px var(--font-family-base); /* headings on small screens */
+  --docs-type-subheading: 590 20px / 28px var(--font-family-base);
+  --docs-type-large: 510 18px / 26px var(--font-family-base);
+  --docs-type-lead: 400 17px / 28px var(--font-family-base);
+  --docs-type-body: 400 16px / 28px var(--font-family-base);
+  --docs-type-body-bold: 590 16px / 24px var(--font-family-base);
+  --docs-type-small: 400 14px / 22px var(--font-family-base); /* Small/Bold's size, regular weight */
+  --docs-type-small-medium: 510 14px / 22px var(--font-family-base);
+  --docs-type-specimen: 400 40px / 48px var(--font-family-base);
+  --docs-type-display: 590 88px / 1 var(--font-family-base);
+  --docs-tracking-tight: -0.5px;
+  /* Code only: SF Mono, the monospaced cut of the same family. */
+  --docs-font-mono: 'SF Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --docs-type-code: 400 13px / 21px var(--docs-font-mono);
+
+  /* Colour — product tokens and tints of them */
+  --docs-border: var(--color-button-disabled);
+  --docs-accent: var(--color-button-primary-clicked);
+  --docs-accent-tint: color-mix(in srgb, var(--color-button-primary) 10%, transparent);
+  --docs-accent-tint-faint: color-mix(in srgb, var(--color-button-primary) 5%, transparent);
+  --docs-accent-border: color-mix(in srgb, var(--color-button-primary) 35%, transparent);
+  --docs-warning-tint: color-mix(in srgb, var(--color-bg-secondary) 10%, transparent);
+  --docs-warning-border: color-mix(in srgb, var(--color-bg-secondary) 45%, transparent);
+  --docs-hairline: color-mix(in srgb, var(--color-text-default) 12%, transparent);
+  --docs-scrim: color-mix(in srgb, var(--color-text-default) 30%, transparent);
+  --docs-topbar-bg: color-mix(in srgb, var(--color-bg-on-canvas) 85%, transparent);
+
+  /* Space — the product scale (--space-*) plus docs-only page-level steps */
+  --docs-space-4: 4px;
+  --docs-space-6: 6px;
+  --docs-space-20: 20px;
+  --docs-space-24: 24px;
+  --docs-space-32: 32px;
+  --docs-space-40: 40px;
+  --docs-space-48: 48px;
+  --docs-space-64: 64px;
+
+  /* Layout */
+  --docs-topbar-height: 64px;
+  --docs-rail-width: 256px;
+  --docs-content-width: 720px;
+
+  /* Motion — reuses the product's motion tokens */
+  --docs-hover-dur: var(--text-morph-dur);
+  --docs-hover-ease: var(--text-morph-ease);
+  --docs-drawer-dur: var(--resize-dur);
+  --docs-drawer-ease: var(--resize-ease);
+}

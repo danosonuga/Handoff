@@ -1,0 +1,97 @@
+.search {
+  position: relative;
+  width: var(--docs-rail-width);
+}
+
+.input {
+  width: 100%;
+  height: 34px;
+  padding: 0 56px 0 var(--space-12);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  background: var(--color-bg-default);
+  color: var(--color-text-default);
+  font: var(--docs-type-small);
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.input::placeholder {
+  color: var(--color-text-neutral);
+}
+.input:focus {
+  border-color: var(--color-button-primary);
+  background: var(--color-bg-canvas);
+}
+.input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.shortcut {
+  position: absolute;
+  top: 7px;
+  right: var(--docs-space-6);
+  padding: 0 var(--docs-space-6);
+  border: 1px solid var(--docs-border);
+  border-radius: var(--radius-xs);
+  background: var(--color-bg-canvas);
+  color: var(--color-text-neutral);
+  font: var(--type-micro-regular);
+  pointer-events: none;
+}
+
+.results {
+  position: absolute;
+  top: calc(100% + var(--docs-space-6));
+  right: 0;
+  left: 0;
+  z-index: 30;
+  margin: 0;
+  padding: var(--docs-space-6);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-canvas);
+  box-shadow: var(--shadow-card);
+  list-style: none;
+}
+
+.result {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-8);
+  padding: var(--space-8) var(--space-10);
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+}
+.result[aria-selected='true'] {
+  background: var(--docs-accent-tint);
+}
+
+.resultTitle {
+  color: var(--color-text-default);
+  font: var(--docs-type-small-medium);
+}
+
+.resultSection,
+.empty {
+  color: var(--color-text-neutral);
+  font: var(--type-micro-regular);
+}
+
+.empty {
+  padding: var(--space-8) var(--space-10);
+}
+
+@media (max-width: 800px) {
+  .search {
+    width: min(200px, 45vw);
+  }
+  .shortcut {
+    display: none;
+  }
+  /* 16px stops iOS Safari zooming in on focus. */
+  .input {
+    padding-right: var(--space-12);
+    font: var(--docs-type-body);
+  }
+}

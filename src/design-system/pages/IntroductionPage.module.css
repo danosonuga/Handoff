@@ -1,0 +1,98 @@
+/* Hero panel, after Poseidon's dark "UI Kit" banner. */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: var(--docs-space-24);
+  margin-top: var(--space-8);
+  padding: var(--docs-space-40);
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--color-text-default);
+}
+
+.heroTitle {
+  margin: 0;
+  color: var(--color-text-disabled);
+  font: var(--docs-type-title);
+  letter-spacing: var(--docs-tracking-tight);
+}
+.heroTitle span {
+  color: var(--color-text-on-solid-bg);
+}
+
+.heroFacts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  margin: var(--docs-space-24) 0 0;
+  padding: 0;
+  color: var(--color-text-on-solid-bg);
+  font: var(--type-micro-medium);
+  list-style: none;
+}
+.heroFacts span {
+  display: inline-block;
+  width: 64px;
+  color: var(--color-text-disabled);
+}
+
+.heroCard {
+  width: 260px;
+  margin: calc(-1 * var(--space-12)) calc(-1 * var(--space-12)) -120px 0;
+  pointer-events: none;
+}
+
+.contents {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-12);
+}
+
+.contentCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--docs-space-4);
+  padding: var(--space-16);
+  border: 1px solid var(--docs-border);
+  border-radius: var(--radius-md);
+  color: inherit;
+  text-decoration: none;
+  transition:
+    border-color var(--docs-hover-dur) var(--docs-hover-ease),
+    background-color var(--docs-hover-dur) var(--docs-hover-ease);
+}
+.contentCard:hover {
+  border-color: var(--color-button-primary);
+  background: var(--docs-accent-tint-faint);
+}
+
+.contentTitle {
+  color: var(--color-text-default);
+  font: var(--docs-type-body-bold);
+}
+
+.contentText {
+  color: var(--color-text-neutral);
+  font: var(--docs-type-small);
+}
+
+@media (max-width: 640px) {
+  .hero {
+    grid-template-columns: 1fr;
+    padding: var(--docs-space-24) var(--docs-space-24) 0;
+  }
+  .heroTitle {
+    font: var(--docs-type-heading);
+  }
+  .heroCard {
+    justify-self: center;
+    margin: 0 0 -140px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contentCard {
+    transition: none;
+  }
+}
