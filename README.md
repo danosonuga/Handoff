@@ -29,7 +29,7 @@ npm run preview  # serve the production build
 
 ## Design system docs
 
-`npm run dev` also serves the **Handoff Design System** at <http://localhost:5173/design-system/>. It's a docs site laid out like [Poseidon](https://poseidon.hydrogenpay.com/), with a sidebar, Preview/Code tabs, props tables and "On This Page". It covers:
+`npm run dev` It covers:
 
 | Page | What it shows |
 |---|---|
