@@ -1,0 +1,18 @@
+.live {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  width: 100%;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-12);
+}
+
+.count {
+  color: var(--color-text-default);
+  font: var(--type-micro-bold);
+}

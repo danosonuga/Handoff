@@ -4,6 +4,7 @@ A React + TypeScript volunteering cause card, implemented from Figma and animate
 
 **Quick links:**
 - [Quick start](#quick-start)
+- [Design system docs](#design-system-docs)
 - [How it fits together](#how-it-fits-together)
 - [Common changes](#common-changes)
 - [Gotchas](#gotchas-read-before-editing)
@@ -25,6 +26,28 @@ npm run preview  # serve the production build
 - **Stack:** Vite, React 19, TypeScript and CSS Modules.
 - **Runtime dependencies:** only `react` and `react-dom`. No UI, styling, icon or animation libraries.
 - **Tests:** there is no test suite or linter. `npm run build` is the check, because it type-checks first.
+
+## Design system docs
+
+`npm run dev` also serves the **Handoff Design System** at <http://localhost:5173/design-system/>. It's a docs site laid out like [Poseidon](https://poseidon.hydrogenpay.com/), with a sidebar, Preview/Code tabs, props tables and "On This Page". It covers:
+
+| Page | What it shows |
+|---|---|
+| Foundations → Colours | Base palette (every distinct colour in `tokens.css`, grouped by hue), translucent colours, WCAG contrast of the text/surface pairs in use |
+| Foundations → Design Tokens | Naming, colour tokens by Figma collection, spacing, radius, elevation |
+| Foundations → Typography | SF Pro, weights, the six text styles with specimens |
+| UI → Components → Button | Variants, states, custom properties, props, accessibility |
+| UI → Components → Card | Cause card variants, anatomy, building blocks, props |
+| UI → Components → Progress | `ProgressBar` states (default, empty, complete, over goal, live update, in a stat panel), anatomy, props |
+
+**It's generated from the code, so it can't drift:**
+
+- Token tables are parsed from `src/styles/tokens.css` (value and the Figma comment), and "Used in" is found by scanning every component's CSS for `var(--token)`. Change a token and the docs update.
+- Every example is a real file in `src/design-system/examples/`. It renders in the Preview tab, and its source (imported with `?raw`) is the Code tab.
+- The docs interface is styled with the design system itself: SF Pro at the system's weights, palette colours only, product spacing, radii and motion. Docs-only values (page-title sizes, wide gaps, tints) are in `src/design-system/docs-tokens.css`, and each is built from a product token.
+- Examples import with `@/…` (= `src/…`), declared in `tsconfig.json` `paths` and enabled by `resolve.tsconfigPaths` in `vite.config.ts`.
+
+To document a new component, add an example file, add a page in `src/design-system/pages/`, and register it in `src/design-system/pages.ts` (sidebar, search and prev/next all read that list).
 
 ## How it fits together
 
@@ -151,6 +174,13 @@ type Cause = {
 ```
 src/
 ├── main.tsx                  # entry; imports App, then tokens, global and transitions CSS
+├── design-system/            # docs site (entry: design-system/index.html)
+│   ├── docs-tokens.css       #   docs chrome tokens, built from tokens.css
+│   ├── pages.ts              #   page registry: sidebar, search, prev/next
+│   ├── pages/                #   Introduction, Colours, Tokens, Typography, Button, Card, Progress
+│   ├── examples/             #   live examples; also shown as source in the Code tab
+│   ├── components/           #   docs chrome: DocsLayout, Search, Example, CodeBlock, Doc
+│   └── lib/                  #   tokens.css parser, colour/contrast maths, highlighter
 ├── App.tsx / App.module.css  # centres the card on a white page (the Figma canvas)
 ├── data/cause.ts             # sample content
 ├── styles/

@@ -1,0 +1,6 @@
+/* Recolour a Button through its custom properties; disabled styling still wins. */
+.volunteer {
+  --button-bg: var(--color-cta-volunteer);
+  --button-bg-pressed: var(--color-cta-volunteer-pressed);
+  --button-shadow: var(--shadow-cta-volunteer-inset);
+}

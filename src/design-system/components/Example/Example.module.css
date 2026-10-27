@@ -1,0 +1,75 @@
+.example {
+  margin: var(--space-16) 0 var(--docs-space-24);
+}
+
+.tabs {
+  display: flex;
+  gap: var(--space-8);
+  padding-bottom: 1px;
+  border-bottom: 1px solid var(--docs-border);
+}
+
+.tab {
+  margin-bottom: -2px;
+  padding: var(--space-8);
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: var(--radius-xs) var(--radius-xs) 0 0;
+  background: none;
+  color: var(--color-text-neutral);
+  font: var(--docs-type-small-medium);
+  cursor: pointer;
+  transition: color var(--docs-hover-dur) var(--docs-hover-ease);
+}
+.tab:hover {
+  color: var(--color-text-default);
+}
+.tab[aria-selected='true'] {
+  border-bottom-color: currentColor;
+  color: var(--docs-accent);
+}
+.tab:focus-visible {
+  outline: 2px solid var(--color-button-primary);
+  outline-offset: -2px;
+}
+
+.stage {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-16);
+  margin-top: var(--space-16);
+  padding: var(--docs-space-40) var(--docs-space-24);
+  border: 1px solid var(--docs-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-canvas);
+}
+.stage[data-stage='on-canvas'] {
+  background: var(--color-bg-on-canvas);
+}
+.stage[hidden] {
+  display: none;
+}
+
+/* Fixed-width frame for full-width parts. */
+.frame {
+  width: 100%;
+}
+
+/* Code blocks sit flush under the tabs, stacked when there are several files. */
+.codePanel > div {
+  margin: var(--space-16) 0 0;
+}
+
+@media (max-width: 480px) {
+  .stage {
+    padding: var(--docs-space-24) var(--space-12);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tab {
+    transition: none;
+  }
+}

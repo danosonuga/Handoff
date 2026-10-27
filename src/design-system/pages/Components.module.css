@@ -1,0 +1,13 @@
+/* Docs-only "Replay" control beside an example. */
+.replay {
+  padding: var(--docs-space-4) var(--space-10);
+  border: 1px solid var(--docs-border);
+  border-radius: var(--radius-full);
+  background: var(--color-bg-canvas);
+  color: var(--color-text-neutral);
+  font: var(--type-micro-medium);
+  cursor: pointer;
+}
+.replay:hover {
+  color: var(--color-text-default);
+}

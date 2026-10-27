@@ -1,0 +1,210 @@
+/* Docs content type, all SF Pro tokens: title 36, heading 28 with a rule, body 16/28 (Poseidon's layout). */
+.title {
+  margin: var(--space-8) 0 0;
+  color: var(--color-text-default);
+  font: var(--docs-type-title);
+  letter-spacing: var(--docs-tracking-tight);
+}
+
+.lead {
+  margin: var(--docs-space-20) 0 0;
+  color: var(--color-text-default);
+  font: var(--docs-type-lead);
+}
+
+.section {
+  margin-top: var(--docs-space-48);
+}
+
+.h2 {
+  position: relative;
+  margin: 0 0 var(--docs-space-20);
+  padding-bottom: var(--space-8);
+  border-bottom: 1px solid var(--docs-border);
+  color: var(--color-text-default);
+  font: var(--docs-type-heading);
+  letter-spacing: var(--docs-tracking-tight);
+  /* Clear the sticky top bar when scrolled to. */
+  scroll-margin-top: calc(var(--docs-topbar-height) + var(--docs-space-24));
+}
+
+.anchor {
+  margin-left: var(--space-8);
+  color: var(--color-text-disabled);
+  font-weight: 400;
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity var(--docs-hover-dur) var(--docs-hover-ease);
+}
+.h2:hover .anchor {
+  opacity: 1;
+}
+
+.h3 {
+  margin: var(--docs-space-32) 0 var(--space-12);
+  color: var(--color-text-default);
+  font: var(--docs-type-subheading);
+}
+
+.prose {
+  color: var(--color-text-default);
+  font: var(--docs-type-body);
+}
+.prose p {
+  margin: 0 0 var(--space-16);
+}
+.prose ul,
+.prose ol {
+  margin: 0 0 var(--space-16);
+  padding-left: var(--docs-space-24);
+}
+.prose li + li {
+  margin-top: var(--docs-space-6);
+}
+.prose strong {
+  font-weight: 590;
+}
+.prose a,
+.callout a,
+.table a {
+  color: var(--docs-accent);
+  text-underline-offset: 2px;
+}
+
+/* Inline code: token and file names, in SF Mono. */
+.code,
+.prose code,
+.callout code,
+.table code,
+.do code,
+.dont code {
+  padding: 2px var(--docs-space-6);
+  border: 1px solid var(--color-bg-default);
+  border-radius: var(--radius-xs);
+  background: var(--color-bg-on-canvas);
+  color: var(--color-text-default);
+  font-family: var(--docs-font-mono);
+  font-size: 0.85em;
+  white-space: nowrap;
+}
+
+.code.typeCode {
+  white-space: normal;
+  word-break: break-word;
+}
+
+.callout {
+  display: flex;
+  gap: var(--space-10);
+  margin: var(--docs-space-20) 0;
+  padding: var(--space-12) var(--space-16);
+  border: 1px solid var(--docs-accent-border);
+  border-radius: var(--radius-md);
+  background: var(--docs-accent-tint);
+  color: var(--color-text-default);
+  font: var(--docs-type-small);
+}
+.callout[data-tone='warning'] {
+  border-color: var(--docs-warning-border);
+  background: var(--docs-warning-tint);
+}
+.callout p {
+  margin: 0;
+}
+.calloutIcon {
+  flex-shrink: 0;
+  font: var(--docs-type-small);
+}
+
+.tableWrap {
+  margin: var(--space-16) 0 var(--docs-space-24);
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--color-text-default);
+  font: var(--docs-type-small);
+}
+.table th,
+.table td {
+  padding: var(--space-8) var(--space-14);
+  border: 1px solid var(--docs-border);
+  text-align: left;
+  vertical-align: top;
+}
+.table th {
+  background: var(--color-bg-on-canvas);
+  font: var(--type-small-bold);
+  white-space: nowrap;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--docs-space-4);
+}
+
+.chip {
+  padding: 0 var(--space-8);
+  border-radius: var(--radius-full);
+  background: var(--color-bg-default);
+  color: var(--color-text-default);
+  font: var(--type-micro-medium);
+  white-space: nowrap;
+}
+
+.unused {
+  color: var(--color-text-disabled);
+  font: var(--type-micro-regular);
+}
+
+.doDont {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-16);
+  margin: var(--space-16) 0 var(--docs-space-24);
+}
+
+/* The palette has no success/error colours, so Do uses Buttons/primary and Don't Background/secondary. */
+.do,
+.dont {
+  padding: var(--space-16) var(--docs-space-20);
+  border-top: 3px solid;
+  border-radius: var(--radius-md);
+  background: var(--color-bg-on-canvas);
+  font: var(--docs-type-small);
+}
+.do {
+  border-top-color: var(--color-button-primary);
+}
+.dont {
+  border-top-color: var(--color-bg-secondary);
+}
+.do ul,
+.dont ul {
+  margin: 0;
+  padding-left: var(--docs-space-20);
+}
+.do li + li,
+.dont li + li {
+  margin-top: var(--docs-space-6);
+}
+
+.doDontLabel {
+  margin: 0 0 var(--space-8);
+  font: var(--type-small-bold);
+}
+
+@media (max-width: 640px) {
+  .title {
+    font: var(--docs-type-heading);
+  }
+  .h2 {
+    font: var(--docs-type-heading-compact);
+  }
+  .doDont {
+    grid-template-columns: 1fr;
+  }
+}
