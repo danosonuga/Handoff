@@ -1,0 +1,56 @@
+.root {
+  position: relative;
+  display: inline-flex;
+  padding: var(--space-2);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-default);
+}
+
+.list {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.option {
+  padding: var(--docs-space-4) var(--space-12);
+  border: 0;
+  /* Concentric inside the control's radius and padding. */
+  border-radius: calc(var(--radius-md) - var(--space-2));
+  background: none;
+  color: var(--color-text-neutral);
+  font: var(--type-small-medium);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: transform var(--docs-press-dur) var(--docs-ease-out);
+}
+.option:active {
+  transform: scale(var(--docs-press-scale));
+}
+.option:focus-visible {
+  outline: 2px solid var(--color-button-primary);
+  outline-offset: 1px;
+}
+
+/* Same layout as the real list, laid exactly over it; only the clipped part shows. */
+.overlay {
+  position: absolute;
+  inset: 0;
+  padding: var(--space-2);
+  pointer-events: none;
+  transition: clip-path var(--docs-indicator-dur) var(--docs-ease-in-out);
+}
+
+.selected {
+  background: var(--color-bg-canvas);
+  box-shadow: inset 0 0 0 1px var(--docs-hairline);
+  color: var(--color-text-default);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay {
+    transition: none;
+  }
+  .option:active {
+    transform: none;
+  }
+}

@@ -33,14 +33,29 @@
   display: flex;
   flex-direction: column;
   margin: 0;
-  overflow: hidden;
   border-radius: var(--radius-md);
   background: var(--color-bg-canvas);
   box-shadow: var(--shadow-card);
 }
 
+.swatchCopy {
+  display: flex;
+  width: 100%;
+}
+
+/* No hover tint behind a colour; a ring shows the swatch is clickable instead. */
+.swatchCopy button {
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+.swatchCopy button:hover {
+  background: none;
+}
+
 .swatchColour {
+  display: block;
   height: 96px;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  transition: box-shadow var(--docs-hover-dur) var(--docs-hover-ease);
   /* Hairline so white and near-white swatches stay visible. */
   box-shadow: inset 0 -1px 0 var(--docs-hairline);
 }
@@ -214,6 +229,12 @@
 }
 
 /* Typography */
+.familyGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-16);
+}
+
 .familyCard {
   display: flex;
   align-items: center;
@@ -223,6 +244,7 @@
   background: var(--color-bg-on-canvas);
 }
 
+/* Family is set inline per card. */
 .familyGlyph {
   color: var(--color-text-default);
   font: var(--docs-type-display);
@@ -232,44 +254,33 @@
 .familyName {
   margin: 0;
   color: var(--color-text-default);
-  font: var(--docs-type-subheading);
+  font: var(--type-section-header-bold);
 }
 
-.familyMeta {
-  margin: var(--docs-space-4) 0 var(--space-8);
-}
-
-.familyStack {
-  margin: 0;
+.familyRole {
+  margin: var(--space-2) 0 0;
   color: var(--color-text-neutral);
   font: var(--type-micro-regular);
 }
 
-.weights {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: var(--space-16);
+.familyMeta {
+  margin: var(--space-8) 0;
 }
 
-.weight {
+.familyWeights {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--docs-space-4);
-  padding: var(--space-16);
-  border: 1px solid var(--docs-border);
-  border-radius: var(--radius-md);
+  flex-wrap: wrap;
+  gap: var(--docs-space-4) var(--space-12);
+  color: var(--color-text-default);
+  font: var(--type-small-regular); /* family and weight are overridden inline per sample */
 }
 
-/* Weight is set inline per sample. */
-.weightSample {
-  color: var(--color-text-default);
-  font: var(--docs-type-specimen);
-}
-
-.weightName {
-  color: var(--color-text-default);
-  font: var(--type-small-bold);
+.scaleGroup {
+  margin: var(--docs-space-24) 0 var(--space-12);
+  color: var(--color-text-neutral);
+  font: var(--type-caps);
+  letter-spacing: var(--type-caps-tracking);
+  text-transform: uppercase;
 }
 
 .scale {
@@ -309,9 +320,36 @@
   font: var(--type-micro-regular);
 }
 
+.scaleSampleCell {
+  min-width: 0;
+}
+
+/* Padding gives the trigger's hover highlight room; the negative margin keeps the text aligned. */
+.scaleSampleCell button {
+  width: auto;
+  margin: calc(-1 * var(--space-2)) calc(-1 * var(--space-8));
+  padding: var(--space-2) var(--space-8);
+}
+
 .scaleSample {
-  margin: 0;
+  display: block;
+  overflow-wrap: anywhere;
   color: var(--color-text-default);
+}
+
+/* Hover ring on a swatch (mouse only). */
+@media (hover: hover) {
+  .swatchCopy:hover .swatchColour {
+    box-shadow:
+      inset 0 -1px 0 var(--docs-hairline),
+      inset 0 0 0 2px var(--docs-accent-border);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swatchColour {
+    transition: none;
+  }
 }
 
 @media (max-width: 640px) {

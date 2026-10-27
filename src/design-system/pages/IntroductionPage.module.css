@@ -15,7 +15,7 @@
   margin: 0;
   color: var(--color-text-disabled);
   font: var(--docs-type-title);
-  letter-spacing: var(--docs-tracking-tight);
+  letter-spacing: var(--docs-title-tracking);
 }
 .heroTitle span {
   color: var(--color-text-on-solid-bg);
@@ -84,6 +84,7 @@
   }
   .heroTitle {
     font: var(--docs-type-heading);
+    letter-spacing: var(--docs-heading-tracking);
   }
   .heroCard {
     justify-self: center;

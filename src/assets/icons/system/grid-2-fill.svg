@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+<g transform="translate(-164 -776)">
+<g>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M173 779C174.105 779 175 779.895 175 781V787C175 788.105 174.105 789 173 789H169C167.895 789 167 788.105 167 787V781C167 779.895 167.895 779 169 779H173Z" fill="currentColor"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M183 779C184.105 779 185 779.895 185 781V783C185 784.105 184.105 785 183 785H179C177.895 785 177 784.105 177 783V781C177 779.895 177.895 779 179 779H183Z" fill="currentColor"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M185 789C185 787.895 184.105 787 183 787H179C177.895 787 177 787.895 177 789V795C177 796.105 177.895 797 179 797H183C184.105 797 185 796.105 185 795V789Z" fill="currentColor"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M173 791C174.105 791 175 791.895 175 793V795C175 796.105 174.105 797 173 797H169C167.895 797 167 796.105 167 795V793C167 791.895 167.895 791 169 791H173Z" fill="currentColor"/>
+</g>
+</g>
+</svg>

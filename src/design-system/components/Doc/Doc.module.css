@@ -1,9 +1,9 @@
-/* Docs content type, all SF Pro tokens: title 36, heading 28 with a rule, body 16/28 (Poseidon's layout). */
+/* Docs content type from the type scale: title H5, section heading H6 with a rule, body Large (Poseidon's layout). */
 .title {
   margin: var(--space-8) 0 0;
   color: var(--color-text-default);
   font: var(--docs-type-title);
-  letter-spacing: var(--docs-tracking-tight);
+  letter-spacing: var(--docs-title-tracking);
 }
 
 .lead {
@@ -23,7 +23,7 @@
   border-bottom: 1px solid var(--docs-border);
   color: var(--color-text-default);
   font: var(--docs-type-heading);
-  letter-spacing: var(--docs-tracking-tight);
+  letter-spacing: var(--docs-heading-tracking);
   /* Clear the sticky top bar when scrolled to. */
   scroll-margin-top: calc(var(--docs-topbar-height) + var(--docs-space-24));
 }
@@ -200,9 +200,11 @@
 @media (max-width: 640px) {
   .title {
     font: var(--docs-type-heading);
+    letter-spacing: var(--docs-heading-tracking);
   }
   .h2 {
     font: var(--docs-type-heading-compact);
+    letter-spacing: var(--type-section-header-bold-tracking);
   }
   .doDont {
     grid-template-columns: 1fr;

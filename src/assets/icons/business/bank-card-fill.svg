@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+<g transform="translate(-484 -270)">
+<g>
+<path d="M486 277C486 275.343 487.343 274 489 274H503C504.657 274 506 275.343 506 277V278H486V277Z" fill="currentColor"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M486 280H506V287C506 288.657 504.657 290 503 290H489C487.343 290 486 288.657 486 287V280ZM499 284C498.448 284 498 284.448 498 285C498 285.552 498.448 286 499 286H502C502.552 286 503 285.552 503 285C503 284.448 502.552 284 502 284H499Z" fill="currentColor"/>
+</g>
+</g>
+</svg>

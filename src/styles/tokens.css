@@ -1,6 +1,7 @@
 /*
  * Design tokens — mirrored from Figma variables and text styles
- * (file hiZ7TLrohRMQJ7PcOBhf2f, frame "V1" 15:3, Button states 29:447).
+ * (file hiZ7TLrohRMQJ7PcOBhf2f, frame "V1" 15:3, Button states 29:447,
+ * Typography sheet 76:754).
  * Figma name is noted beside each token so design updates map 1:1.
  */
 :root {
@@ -30,18 +31,79 @@
   /* Derived: Buttons/primary-clicked shifted to the V2 hue (not in Figma). */
   --color-cta-volunteer-pressed: #35198c;
 
-  /* Typography — SF Pro with system fallbacks (see README: substitutions) */
+  /*
+   * Typography — Figma "Typography" sheet 76:754, plus the card's styles (24:247).
+   * Two families, by agreement with design: Clash Display for headings (H1 to
+   * Section Header) and SF Pro for text (Large and smaller, Buttons, CAPS).
+   * Sizes, line heights and tracking come from the styles applied in Figma
+   * (they win over the sheet's hand-written labels where the two disagree).
+   * Each style is a `font` shorthand: weight size/line-height family.
+   * Non-zero tracking is a separate `-tracking` token; set it with letter-spacing.
+   */
   --font-family-base: 'SF Pro Text', 'SF Pro', -apple-system, BlinkMacSystemFont, system-ui,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; /* SF Pro, system fallbacks (see README: substitutions) */
+  /* Clash Display is served by Fontshare's CSS link (licence: no redistribution), not committed. */
+  --font-family-display: 'Clash Display', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui,
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; /* Clash Display (sheet label; Figma applies Instrument Sans) */
 
-  /* weight size/line-height family */
+  /* Headings — Clash Display, weights 600 / 500 / 400 */
+  --type-h1-bold: 600 64px / 72px var(--font-family-display); /* H1/Bold */
+  --type-h1-medium: 500 64px / 72px var(--font-family-display); /* H1/Medium */
+  --type-h1-regular: 400 64px / 72px var(--font-family-display); /* H1/Regular */
+  --type-h1-tracking: -0.5px; /* H1 tracking, all weights */
+  --type-h2-bold: 600 56px / 60px var(--font-family-display); /* H2/Bold */
+  --type-h2-medium: 500 56px / 60px var(--font-family-display); /* H2/Medium */
+  --type-h2-regular: 400 56px / 60px var(--font-family-display); /* H2/Regular */
+  --type-h2-bold-tracking: -0.4px; /* H2/Bold tracking */
+  --type-h2-tracking: -0.5px; /* H2/Medium and H2/Regular tracking */
+  --type-h3-bold: 600 48px / 56px var(--font-family-display); /* H3/Bold */
+  --type-h3-medium: 500 48px / 56px var(--font-family-display); /* H3/Medium */
+  --type-h3-regular: 400 48px / 56px var(--font-family-display); /* H3/Regular */
+  --type-h3-tracking: -0.4px; /* H3 tracking, all weights */
+  --type-h4-bold: 600 40px / 48px var(--font-family-display); /* H4/Bold */
+  --type-h4-medium: 500 40px / 48px var(--font-family-display); /* H4/Medium */
+  --type-h4-regular: 400 40px / 48px var(--font-family-display); /* H4/Regular */
+  --type-h4-tracking: -0.24px; /* H4 tracking, all weights */
+  --type-h5-bold: 600 32px / 36px var(--font-family-display); /* H5/Bold (sheet label says 40px line height) */
+  --type-h5-medium: 500 32px / 36px var(--font-family-display); /* H5/Medium */
+  --type-h5-regular: 400 32px / 36px var(--font-family-display); /* H5/Regular */
+  --type-h5-tracking: -0.2px; /* H5 tracking, all weights */
+  --type-h6-bold: 600 24px / 32px var(--font-family-display); /* H6/Bold */
+  --type-h6-medium: 500 24px / 32px var(--font-family-display); /* H6/Medium */
+  --type-h6-regular: 400 24px / 32px var(--font-family-display); /* H6/Regular */
+  --type-h6-tracking: 0.4px; /* H6 tracking, all weights (sheet label says -0.1px) */
+  --type-section-header-bold: 600 20px / 28px var(--font-family-display); /* Section Header/Bold */
+  --type-section-header-medium: 500 20px / 28px var(--font-family-display); /* Section Header/Medium */
+  --type-section-header-regular: 400 20px / 28px var(--font-family-display); /* Section Header/Regular */
+  --type-section-header-bold-tracking: -0.1px; /* Section Header/Bold tracking */
+
+  /* Text — SF Pro. Figma's Inter weights 600 / 500 map to SF Pro Semibold 590 / Medium 510 (derived) */
+  --type-large-bold: 590 16px / 24px var(--font-family-base); /* Large/Bold */
+  --type-large-medium: 510 16px / 24px var(--font-family-base); /* Large/Medium */
+  --type-large-regular: 400 16px / 24px var(--font-family-base); /* Large/Regular (raw in Figma, no style) */
   --type-small-bold: 590 14px / 22px var(--font-family-base); /* Small/Bold */
-  --type-button-large: 590 14px / 22px var(--font-family-base); /* Button/Large */
-  --type-micro-bold: 590 12px / 20px var(--font-family-base); /* Micro/Bold */
+  --type-small-medium: 510 14px / 22px var(--font-family-base); /* Small/Medium */
+  --type-small-regular: 400 14px / 22px var(--font-family-base); /* Small/Regular */
+  /* The card title binds Small/Bold without tracking (frame 24:247), so it doesn't apply this. */
+  --type-small-bold-tracking: 0.1px; /* Small/Bold tracking */
+  --type-micro-bold: 590 12px / 20px var(--font-family-base); /* Micro/Bold (raw in the sheet; style in 24:247) */
   --type-micro-medium: 510 12px / 20px var(--font-family-base); /* Micro/Medium */
   --type-micro-regular: 400 12px / 20px var(--font-family-base); /* Micro/Regular */
-  --type-caps: 510 10px / 20px var(--font-family-base); /* CAPS */
+  --type-caption-bold: 590 10px / 18px var(--font-family-base); /* Caption/Bold */
+  --type-caption-medium: 510 10px / 18px var(--font-family-base); /* Caption/Medium */
+  --type-caption-regular: 400 10px / 18px var(--font-family-base); /* Caption/Regular */
+  --type-caption-tracking: 0.1px; /* Caption tracking, all weights */
+  --type-caps: 510 10px / 20px var(--font-family-base); /* CAPS (card only, not on the sheet) */
   --type-caps-tracking: 1px; /* CAPS letter spacing */
+
+  /* Buttons — SF Pro */
+  /* Button/Large keeps the Button component's binding (29:447, 24:247). The sheet
+     redefines it as 510 14px/20px +0.1px; the component hasn't adopted that yet. */
+  --type-button-large: 590 14px / 22px var(--font-family-base); /* Button/Large */
+  --type-button-medium: 510 13px / 20px var(--font-family-base); /* Button/Medium */
+  --type-button-small: 510 12px / 18px var(--font-family-base); /* Button/Small */
+  --type-button-medium-tracking: 0.1px; /* Button/Medium tracking */
+  --type-button-small-tracking: 0.1px; /* Button/Small tracking */
 
   /* Spacing — values used by the Figma auto-layout */
   --space-2: 2px;

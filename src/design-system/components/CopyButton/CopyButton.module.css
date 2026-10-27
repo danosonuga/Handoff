@@ -1,0 +1,39 @@
+.copy {
+  padding: 2px var(--space-8);
+  border: 0;
+  border-radius: var(--radius-xs);
+  background: none;
+  color: var(--color-text-neutral);
+  font: var(--type-micro-medium);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: transform var(--docs-press-dur) var(--docs-ease-out);
+}
+.copy:active {
+  transform: scale(var(--docs-press-scale));
+}
+.copy:hover {
+  background: var(--color-bg-default);
+  color: var(--color-text-default);
+}
+.copy:focus-visible {
+  outline: 2px solid var(--color-button-primary);
+  outline-offset: 1px;
+}
+
+/* Announces the copy to screen readers without showing twice. */
+.status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Gentler, not zero: no scale under reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  .copy:active {
+    transform: none;
+  }
+}
