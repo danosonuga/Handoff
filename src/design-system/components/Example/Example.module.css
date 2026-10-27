@@ -19,10 +19,17 @@
   color: var(--color-text-neutral);
   font: var(--docs-type-small-medium);
   cursor: pointer;
-  transition: color var(--docs-hover-dur) var(--docs-hover-ease);
+  transition:
+    transform var(--docs-press-dur) var(--docs-ease-out),
+    color var(--docs-hover-dur) var(--docs-hover-ease);
 }
-.tab:hover {
-  color: var(--color-text-default);
+.tab:active {
+  transform: scale(var(--docs-press-scale));
+}
+@media (hover: hover) and (pointer: fine) {
+  .tab:hover {
+    color: var(--color-text-default);
+  }
 }
 .tab[aria-selected='true'] {
   border-bottom-color: currentColor;
@@ -69,7 +76,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .tab {
-    transition: none;
+  .tab:active {
+    transform: none;
   }
 }

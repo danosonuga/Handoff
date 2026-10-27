@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+<g transform="translate(-100 -206)">
+<g>
+<path d="M111.5 222C111.224 222 111 222.224 111 222.5V223.5C111 223.776 111.224 224 111.5 224H112.5C112.776 224 113 223.776 113 223.5V222.5C113 222.224 112.776 222 112.5 222H111.5Z" fill="currentColor"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M107 208C105.895 208 105 208.895 105 210V226C105 227.105 105.895 228 107 228H117C118.105 228 119 227.105 119 226V210C119 208.895 118.105 208 117 208H107ZM107 210L117 210V226H107V210Z" fill="currentColor"/>
+</g>
+</g>
+</svg>

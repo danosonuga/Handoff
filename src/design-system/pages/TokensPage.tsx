@@ -1,5 +1,7 @@
 import { Callout, Code, PageTitle, Prose, Section, SubHeading, Table, UsedIn } from '../components/Doc/Doc';
 import { CodeBlock } from '../components/CodeBlock/CodeBlock';
+import { ExportBar } from '../components/ExportBar/ExportBar';
+import { ALL_CATEGORIES } from '../lib/export';
 import { resolveValue, tokensWithPrefix, type Token } from '../lib/tokens';
 import styles from './Foundations.module.css';
 
@@ -39,6 +41,8 @@ export function TokensPage() {
         are CSS custom properties in <Code>src/styles/tokens.css</Code>, and each one mirrors a Figma variable so a
         design change maps to one line of code.
       </PageTitle>
+
+      <ExportBar categories={ALL_CATEGORIES} fileName="handoff-tokens" subject="all tokens" />
 
       <Section title="Naming">
         <Prose>

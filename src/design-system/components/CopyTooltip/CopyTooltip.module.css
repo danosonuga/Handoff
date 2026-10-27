@@ -1,0 +1,97 @@
+/*
+ * Click-to-copy with a tooltip, after Emil Kowalski's tooltip and button-press
+ * recipes (github.com/emilkowalski/skills, MIT). Transform and opacity only.
+ */
+.group {
+  position: relative;
+  display: inline-flex;
+  max-width: 100%;
+}
+
+/* The element itself is the trigger: no button chrome. */
+.trigger {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-xs);
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+  cursor: copy;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    transform var(--docs-press-dur) var(--docs-ease-out),
+    background-color var(--docs-hover-dur) var(--docs-hover-ease);
+}
+
+/* Press feedback: the element scales, children included, so it reads as physical. */
+.trigger:active {
+  transform: scale(var(--docs-press-scale));
+}
+
+.trigger:focus-visible {
+  outline: 2px solid var(--color-button-primary);
+  outline-offset: 2px;
+}
+
+/* Hover tint only for real pointers; touch fires false hovers on tap. */
+@media (hover: hover) and (pointer: fine) {
+  .trigger:hover {
+    background: var(--docs-accent-tint);
+  }
+}
+
+/* Centred above the element and scaling out of it (origin at its bottom edge). */
+.tip {
+  position: absolute;
+  bottom: calc(100% + var(--space-8));
+  left: 50%;
+  z-index: 10;
+  padding: var(--docs-space-4) var(--space-8);
+  border-radius: var(--radius-xs);
+  background: var(--color-text-default);
+  color: var(--color-text-on-solid-bg);
+  font: var(--type-micro-medium);
+  white-space: nowrap;
+  pointer-events: none;
+  translate: -50% 0;
+  transform-origin: 50% 100%;
+  opacity: 0;
+  transform: scale(var(--docs-tooltip-scale));
+  transition:
+    transform var(--docs-tooltip-dur) var(--docs-ease-out),
+    opacity var(--docs-tooltip-dur) var(--docs-ease-out);
+}
+.tip[data-open] {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Once one tooltip is open, neighbours open (and close) instantly. */
+.tip[data-instant] {
+  transition-duration: 0ms;
+}
+
+/* Announces the copy to screen readers. */
+.status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Gentler, not zero: keep the fade, drop the scale. */
+@media (prefers-reduced-motion: reduce) {
+  .trigger:active {
+    transform: none;
+  }
+  .tip,
+  .tip[data-open] {
+    transform: none;
+  }
+}

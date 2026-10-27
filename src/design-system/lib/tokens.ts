@@ -100,6 +100,15 @@ export function findTranslucentColours() {
   return [...found.values()].map((entry) => ({ ...entry, usedIn: [...entry.usedIn] }));
 }
 
+/**
+ * The tracking token for a text style: its own (`--type-h2-bold-tracking`),
+ * else its group's (`--type-h2-tracking`). Undefined means 0.
+ */
+export function trackingFor(name: string) {
+  const group = name.match(/^(--type-[\w-]+?)-(?:bold|medium|regular)$/)?.[1];
+  return getToken(`${name}-tracking`) ?? (group ? getToken(`${group}-tracking`) : undefined);
+}
+
 /** Splits a `font` shorthand token such as `590 14px / 22px var(--font-family-base)`. */
 export function parseFontShorthand(value: string) {
   const match = value.match(/^(\d+)\s+([\d.]+px)\s*\/\s*([\d.]+px)/);

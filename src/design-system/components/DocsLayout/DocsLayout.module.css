@@ -65,6 +65,10 @@
   background: none;
   color: var(--color-text-default);
   cursor: pointer;
+  transition: transform var(--docs-press-dur) var(--docs-ease-out);
+}
+.menuButton:active {
+  transform: scale(var(--docs-press-scale));
 }
 .menuButton svg {
   width: 20px;
@@ -132,13 +136,49 @@
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
-.navLink:hover,
-.navGroup:hover {
-  background: var(--color-bg-on-canvas);
-  color: var(--color-text-default);
+.navLink,
+.navGroup {
+  transition:
+    transform var(--docs-press-dur) var(--docs-ease-out),
+    background-color var(--docs-hover-dur) var(--docs-hover-ease),
+    color var(--docs-hover-dur) var(--docs-hover-ease);
 }
+.navLink:active,
+.navGroup:active {
+  transform: scale(var(--docs-press-scale));
+}
+@media (hover: hover) and (pointer: fine) {
+  .navLink:not([aria-current='page']):hover,
+  .navGroup:hover {
+    background: var(--color-bg-on-canvas);
+    color: var(--color-text-default);
+  }
+}
+/* Under the overlay; keeps the right colour if the overlay is ever hidden. */
 .navLink[aria-current='page'] {
-  background: var(--docs-accent-tint);
+  color: var(--docs-accent);
+}
+
+/*
+ * Selected-page indicator (Emil Kowalski's clip-path tab indicator): the same
+ * list in the selected style, laid over the real one and clipped to the
+ * current page by useClipIndicator. Background, text colour and weight move
+ * as one element.
+ */
+.nav {
+  position: relative;
+}
+
+.navOverlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transition: clip-path var(--docs-indicator-dur) var(--docs-ease-in-out);
+}
+
+.navLinkSelected {
+  /* Opaque, so the real link's regular-weight text doesn't show through. */
+  background: var(--docs-accent-tint-solid);
   color: var(--docs-accent);
   font: var(--type-small-bold);
 }
@@ -157,7 +197,7 @@
   flex-shrink: 0;
   width: 16px;
   height: 16px;
-  transition: rotate var(--docs-hover-dur) var(--docs-hover-ease);
+  transition: rotate var(--docs-hover-dur) var(--docs-ease-out);
 }
 
 /* Reading column */
@@ -216,9 +256,13 @@
   color: var(--color-text-neutral);
   font: var(--docs-type-large);
   text-decoration: none;
+  transition: transform var(--docs-press-dur) var(--docs-ease-out);
 }
 .pagerLink:hover {
   color: var(--docs-accent);
+}
+.pagerLink:active {
+  transform: scale(var(--docs-press-scale));
 }
 .pagerLink .chevron {
   width: 20px;
@@ -342,20 +386,31 @@
     translate: -100% 0;
     visibility: hidden;
     transition:
-      translate var(--docs-drawer-dur) var(--docs-drawer-ease),
+      translate var(--docs-drawer-dur) var(--docs-ease-drawer),
       visibility 0s var(--docs-drawer-dur);
   }
   .sidebar[data-open='true'] {
     translate: 0 0;
     visibility: visible;
-    transition: translate var(--docs-drawer-dur) var(--docs-drawer-ease);
+    transition: translate var(--docs-drawer-dur) var(--docs-ease-drawer);
   }
+  /* The scrim fades on the drawer's timing, both ways. */
   .scrim {
     position: fixed;
     inset: var(--docs-topbar-height) 0 0;
     z-index: 14;
     display: block;
     background: var(--docs-scrim);
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity var(--docs-drawer-dur) var(--docs-ease-drawer),
+      visibility 0s var(--docs-drawer-dur);
+  }
+  .scrim[data-open='true'] {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity var(--docs-drawer-dur) var(--docs-ease-drawer);
   }
   .article {
     padding: 0 var(--space-16) var(--docs-space-32);
@@ -368,10 +423,18 @@
   }
 }
 
+/* Gentler, not zero: keep fades, drop movement. */
 @media (prefers-reduced-motion: reduce) {
+  .navOverlay,
   .chevron,
   .sidebar,
   .sidebar[data-open='true'] {
     transition: none;
+  }
+  .navLink:active,
+  .navGroup:active,
+  .pagerLink:active,
+  .menuButton:active {
+    transform: none;
   }
 }

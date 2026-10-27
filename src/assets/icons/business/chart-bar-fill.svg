@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+<g transform="translate(-676 -270)">
+<g>
+<path d="M687 273C685.895 273 685 273.895 685 275V291H691V275C691 273.895 690.105 273 689 273H687Z" fill="currentColor"/>
+<path d="M693 278H696C697.105 278 698 278.895 698 280V289C698 290.105 697.105 291 696 291H693V278Z" fill="currentColor"/>
+<path d="M678 283C678 281.895 678.895 281 680 281H683V291H680C678.895 291 678 290.105 678 289V283Z" fill="currentColor"/>
+</g>
+</g>
+</svg>

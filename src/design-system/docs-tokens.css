@@ -1,25 +1,25 @@
 /*
  * Docs interface tokens. The design system docs are styled with the design
  * system itself: every value below is a product token from tokens.css, a tint
- * of one (color-mix), or a docs-only size step for things the product UI
- * doesn't have yet (page titles, wide page gaps). No other colours or fonts.
+ * of one (color-mix), or a docs-only step for things the product UI doesn't
+ * have (wide page gaps, the specimen glyph). No other colours or fonts.
  */
 :root {
-  /* Type — SF Pro (--font-family-base) at the design system's weights: 400 / 510 / 590.
-     Docs-only sizes; 14px and 12px text uses the product styles directly. */
-  --docs-type-title: 590 36px / 44px var(--font-family-base);
-  --docs-type-heading: 590 28px / 36px var(--font-family-base);
-  --docs-type-heading-compact: 590 24px / 32px var(--font-family-base); /* headings on small screens */
-  --docs-type-subheading: 590 20px / 28px var(--font-family-base);
-  --docs-type-large: 510 18px / 26px var(--font-family-base);
-  --docs-type-lead: 400 17px / 28px var(--font-family-base);
-  --docs-type-body: 400 16px / 28px var(--font-family-base);
-  --docs-type-body-bold: 590 16px / 24px var(--font-family-base);
-  --docs-type-small: 400 14px / 22px var(--font-family-base); /* Small/Bold's size, regular weight */
-  --docs-type-small-medium: 510 14px / 22px var(--font-family-base);
-  --docs-type-specimen: 400 40px / 48px var(--font-family-base);
-  --docs-type-display: 590 88px / 1 var(--font-family-base);
-  --docs-tracking-tight: -0.5px;
+  /* Type — the product type scale (Clash Display headings, SF Pro text).
+     Only the specimen glyph has a docs-only size. */
+  --docs-type-title: var(--type-h5-bold);
+  --docs-title-tracking: var(--type-h5-tracking);
+  --docs-type-heading: var(--type-h6-bold);
+  --docs-heading-tracking: var(--type-h6-tracking);
+  --docs-type-heading-compact: var(--type-section-header-bold); /* headings on small screens */
+  --docs-type-subheading: var(--type-section-header-bold);
+  --docs-type-large: var(--type-large-medium);
+  --docs-type-lead: var(--type-large-regular);
+  --docs-type-body: var(--type-large-regular);
+  --docs-type-body-bold: var(--type-large-bold);
+  --docs-type-small: var(--type-small-regular);
+  --docs-type-small-medium: var(--type-small-medium);
+  --docs-type-display: 590 88px / 1 var(--font-family-base); /* "Aa" specimen only */
   /* Code only: SF Mono, the monospaced cut of the same family. */
   --docs-font-mono: 'SF Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --docs-type-code: 400 13px / 21px var(--docs-font-mono);
@@ -28,6 +28,7 @@
   --docs-border: var(--color-button-disabled);
   --docs-accent: var(--color-button-primary-clicked);
   --docs-accent-tint: color-mix(in srgb, var(--color-button-primary) 10%, transparent);
+  --docs-accent-tint-solid: color-mix(in srgb, var(--color-button-primary) 10%, var(--color-bg-canvas)); /* same, opaque */
   --docs-accent-tint-faint: color-mix(in srgb, var(--color-button-primary) 5%, transparent);
   --docs-accent-border: color-mix(in srgb, var(--color-button-primary) 35%, transparent);
   --docs-warning-tint: color-mix(in srgb, var(--color-bg-secondary) 10%, transparent);
@@ -51,9 +52,21 @@
   --docs-rail-width: 256px;
   --docs-content-width: 720px;
 
-  /* Motion — reuses the product's motion tokens */
-  --docs-hover-dur: var(--text-morph-dur);
-  --docs-hover-ease: var(--text-morph-ease);
-  --docs-drawer-dur: var(--resize-dur);
-  --docs-drawer-ease: var(--resize-ease);
+  /*
+   * Motion — Emil Kowalski's design engineering skills (github.com/emilkowalski/skills, MIT):
+   * strong custom curves, UI under 300ms, transform + opacity only.
+   */
+  --docs-ease-out: cubic-bezier(0.23, 1, 0.32, 1); /* entering / exiting, press */
+  --docs-ease-in-out: cubic-bezier(0.77, 0, 0.175, 1); /* moving on screen: indicators */
+  --docs-ease-drawer: cubic-bezier(0.32, 0.72, 0, 1); /* iOS-like drawer */
+  --docs-press-dur: 160ms; /* button press feedback (100–160ms) */
+  --docs-press-scale: 0.97;
+  --docs-tooltip-dur: 125ms; /* tooltips (125–200ms) */
+  --docs-tooltip-scale: 0.97;
+  --docs-tooltip-delay: 600ms; /* first tooltip only (Base UI's default delay) */
+  --docs-tooltip-group: 400ms; /* opens instantly within this long of the last one closing (Base UI's default) */
+  --docs-indicator-dur: 250ms; /* clip-path tab indicator */
+  --docs-drawer-dur: 300ms; /* drawers (200–500ms) */
+  --docs-hover-dur: 150ms;
+  --docs-hover-ease: ease; /* hover / colour change */
 }

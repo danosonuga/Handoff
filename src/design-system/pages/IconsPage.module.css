@@ -1,0 +1,144 @@
+/* Icons library: controls, category chips, lazy category grids. */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-12);
+}
+
+.search {
+  flex: 1 1 220px;
+  min-width: 0;
+  height: 36px;
+  padding: 0 var(--space-12);
+  border: 1px solid var(--docs-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-canvas);
+  color: var(--color-text-default);
+  font: var(--type-small-regular);
+  outline: none;
+}
+.search:focus {
+  border-color: var(--color-button-primary);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--docs-space-6);
+  margin-top: var(--space-12);
+}
+
+.chip {
+  padding: var(--space-2) var(--space-10);
+  border: 1px solid var(--docs-border);
+  border-radius: var(--radius-full);
+  background: var(--color-bg-canvas);
+  color: var(--color-text-neutral);
+  font: var(--type-micro-medium);
+  text-transform: capitalize;
+  cursor: pointer;
+  transition: transform var(--docs-press-dur) var(--docs-ease-out);
+}
+.chip:active {
+  transform: scale(var(--docs-press-scale));
+}
+@media (hover: hover) and (pointer: fine) {
+  .chip:hover {
+    color: var(--color-text-default);
+  }
+}
+.chip[aria-checked='true'] {
+  border-color: transparent;
+  background: var(--docs-accent-tint);
+  color: var(--docs-accent);
+}
+
+.chip:focus-visible {
+  outline: 2px solid var(--color-button-primary);
+  outline-offset: 1px;
+}
+
+.count {
+  margin: var(--space-16) 0 0;
+  color: var(--color-text-neutral);
+  font: var(--type-micro-regular);
+}
+
+.category {
+  margin-top: var(--docs-space-24);
+}
+
+.categoryTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  margin: 0 0 var(--space-12);
+  color: var(--color-text-default);
+  font: var(--type-section-header-bold);
+  letter-spacing: var(--type-section-header-bold-tracking);
+  text-transform: capitalize;
+}
+
+.categoryCount {
+  color: var(--color-text-disabled);
+  font: var(--type-micro-medium);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: var(--space-8);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cell {
+  min-width: 0;
+}
+
+/* The CopyTooltip group fills the cell. */
+.copy {
+  display: flex;
+  width: 100%;
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-8);
+  padding: var(--space-14) var(--space-8) var(--space-10);
+  border: 1px solid var(--color-bg-default);
+  border-radius: var(--radius-md);
+  color: var(--color-text-default);
+}
+
+.glyph {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+}
+
+.name {
+  max-width: 100%;
+  overflow: hidden;
+  color: var(--color-text-neutral);
+  font: var(--type-caption-regular);
+  letter-spacing: var(--type-caption-tracking);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.empty {
+  color: var(--color-text-neutral);
+  font: var(--type-small-regular);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chip:active {
+    transform: none;
+  }
+}

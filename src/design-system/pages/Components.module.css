@@ -7,7 +7,18 @@
   color: var(--color-text-neutral);
   font: var(--type-micro-medium);
   cursor: pointer;
+  transition: transform var(--docs-press-dur) var(--docs-ease-out);
+}
+.replay:active {
+  transform: scale(var(--docs-press-scale));
 }
 .replay:hover {
   color: var(--color-text-default);
+}
+
+/* Gentler, not zero: no scale under reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  .replay:active {
+    transform: none;
+  }
 }

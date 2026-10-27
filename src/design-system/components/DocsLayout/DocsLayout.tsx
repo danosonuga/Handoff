@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode, type RefObject } from 'react';
 import type { DocPage } from '../../pages';
 import { href } from '../../router';
+import { useClipIndicator } from '../../lib/useClipIndicator';
 import { Search } from '../Search/Search';
 import styles from './DocsLayout.module.css';
 
@@ -23,38 +24,78 @@ function Chevron({ direction }: { direction: 'right' | 'down' | 'left' }) {
   );
 }
 
-function SidebarLink({ page, active }: { page: DocPage; active: boolean }) {
-  return (
-    <a className={styles.navLink} href={href(page.path)} aria-current={active ? 'page' : undefined}>
-      {page.title}
-    </a>
-  );
-}
+type NavTreeProps = {
+  pages: DocPage[];
+  current: DocPage;
+  closedGroups: Set<string>;
+  onToggleGroup?: (group: string) => void;
+  /** The selected-style copy laid over the real list (see useClipIndicator). */
+  overlay?: boolean;
+};
 
-/** Collapsible sidebar group (Poseidon's "Components ›"). Opens itself when it holds the current page. */
-function SidebarGroup({ name, pages, current }: { name: string; pages: DocPage[]; current: DocPage }) {
-  const holdsCurrent = pages.includes(current);
-  const [open, setOpen] = useState(true);
-  useEffect(() => {
-    if (holdsCurrent) setOpen(true);
-  }, [holdsCurrent]);
+/**
+ * The sidebar list. It renders twice: the real, interactive list, and an
+ * inert copy in the selected style that's clipped to the current page, so the
+ * highlight and the text colour glide together (useClipIndicator).
+ */
+function NavTree({ pages, current, closedGroups, onToggleGroup, overlay = false }: NavTreeProps) {
+  const link = (page: DocPage) =>
+    overlay ? (
+      <span className={`${styles.navLink} ${styles.navLinkSelected}`}>{page.title}</span>
+    ) : (
+      <a className={styles.navLink} href={href(page.path)} aria-current={page === current ? 'page' : undefined}>
+        {page.title}
+      </a>
+    );
 
   return (
-    <li>
-      <button type="button" className={styles.navGroup} aria-expanded={open} onClick={() => setOpen(!open)}>
-        {name}
-        <Chevron direction={open ? 'down' : 'right'} />
-      </button>
-      {open && (
-        <ul className={styles.navNested}>
-          {pages.map((page) => (
-            <li key={page.path}>
-              <SidebarLink page={page} active={page === current} />
-            </li>
-          ))}
-        </ul>
-      )}
-    </li>
+    <ul className={styles.navList}>
+      {SECTIONS.map((section) => {
+        const inSection = pages.filter((p) => p.section === section);
+        const groups = [...new Set(inSection.map((p) => p.group).filter(Boolean))] as string[];
+        return (
+          <li key={section} className={styles.navSection}>
+            <span className={styles.navHeading}>{section}</span>
+            <ul className={styles.navList}>
+              {inSection
+                .filter((p) => !p.group)
+                .map((page) => (
+                  <li key={page.path}>{link(page)}</li>
+                ))}
+              {groups.map((group) => {
+                const open = !closedGroups.has(group);
+                const label = (
+                  <>
+                    {group}
+                    <Chevron direction={open ? 'down' : 'right'} />
+                  </>
+                );
+                return (
+                  <li key={group}>
+                    {overlay ? (
+                      <span className={styles.navGroup}>{label}</span>
+                    ) : (
+                      <button type="button" className={styles.navGroup} aria-expanded={open} onClick={() => onToggleGroup?.(group)}>
+                        {label}
+                      </button>
+                    )}
+                    {open && (
+                      <ul className={styles.navNested}>
+                        {inSection
+                          .filter((p) => p.group === group)
+                          .map((page) => (
+                            <li key={page.path}>{link(page)}</li>
+                          ))}
+                      </ul>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+          </li>
+        );
+      })}
+    </ul>
   );
 }
 
@@ -84,7 +125,24 @@ function useHeadings(contentRef: RefObject<HTMLElement | null>, pageKey: string)
 
 export function DocsLayout({ pages, current, children }: DocsLayoutProps) {
   const contentRef = useRef<HTMLElement>(null);
+  const navRef = useRef<HTMLElement>(null);
+  const navOverlayRef = useRef<HTMLDivElement>(null);
   const [navOpen, setNavOpen] = useState(false);
+  const [closedGroups, setClosedGroups] = useState<Set<string>>(() => new Set());
+  useClipIndicator(navRef, navOverlayRef, () => navRef.current?.querySelector<HTMLElement>('a[aria-current="page"]'), current.path);
+
+  const toggleGroup = (group: string) =>
+    setClosedGroups((closed) => {
+      const next = new Set(closed);
+      if (next.has(group)) next.delete(group);
+      else next.add(group);
+      return next;
+    });
+
+  // A group opens itself when it holds the current page.
+  useEffect(() => {
+    if (current.group && closedGroups.has(current.group)) toggleGroup(current.group);
+  }, [current]);
   const { headings, activeId } = useHeadings(contentRef, current.path);
 
   // New page: back to the top, close the mobile menu, retitle the tab.
@@ -127,30 +185,11 @@ export function DocsLayout({ pages, current, children }: DocsLayoutProps) {
 
       <div className={styles.body}>
         <aside id="docs-sidebar" className={styles.sidebar} data-open={navOpen}>
-          <nav aria-label="Design system">
-            <ul className={styles.navList}>
-              {SECTIONS.map((section) => {
-                const inSection = pages.filter((p) => p.section === section);
-                const groups = [...new Set(inSection.map((p) => p.group).filter(Boolean))] as string[];
-                return (
-                  <li key={section} className={styles.navSection}>
-                    <span className={styles.navHeading}>{section}</span>
-                    <ul className={styles.navList}>
-                      {inSection
-                        .filter((p) => !p.group)
-                        .map((page) => (
-                          <li key={page.path}>
-                            <SidebarLink page={page} active={page === current} />
-                          </li>
-                        ))}
-                      {groups.map((group) => (
-                        <SidebarGroup key={group} name={group} pages={inSection.filter((p) => p.group === group)} current={current} />
-                      ))}
-                    </ul>
-                  </li>
-                );
-              })}
-            </ul>
+          <nav ref={navRef} aria-label="Design system" className={styles.nav}>
+            <NavTree pages={pages} current={current} closedGroups={closedGroups} onToggleGroup={toggleGroup} />
+            <div ref={navOverlayRef} className={styles.navOverlay} aria-hidden="true" inert>
+              <NavTree pages={pages} current={current} closedGroups={closedGroups} overlay />
+            </div>
           </nav>
         </aside>
 
@@ -228,7 +267,7 @@ export function DocsLayout({ pages, current, children }: DocsLayoutProps) {
         Handoff Design System · built from <code>src/styles/tokens.css</code> and <code>src/components</code>
       </footer>
 
-      {navOpen && <div className={styles.scrim} onClick={() => setNavOpen(false)} aria-hidden="true" />}
+      <div className={styles.scrim} data-open={navOpen} onClick={() => setNavOpen(false)} aria-hidden="true" />
     </div>
   );
 }

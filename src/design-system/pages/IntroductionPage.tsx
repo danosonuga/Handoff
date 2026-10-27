@@ -9,6 +9,7 @@ const CONTENTS = [
   { path: '/foundations/colours', title: 'Colours', text: 'The base palette, grouped by hue, with contrast checks.' },
   { path: '/foundations/tokens', title: 'Design Tokens', text: 'Semantic colour, spacing, radius and elevation tokens.' },
   { path: '/foundations/typography', title: 'Typography', text: 'SF Pro and the six text styles from Figma.' },
+  { path: '/foundations/icons', title: 'Icons', text: '1,214 Line and Fill icons from Figma, searchable and copyable.' },
   { path: '/components/button', title: 'Button', text: 'The primary action, its states, icons and recolouring.' },
   { path: '/components/card', title: 'Card', text: 'The cause card and the parts it’s built from.' },
   { path: '/components/progress', title: 'Progress', text: 'The goal bar: empty, in progress, complete and live.' },

@@ -2,6 +2,7 @@ import type { ComponentType } from 'react';
 import { ButtonPage } from './pages/ButtonPage';
 import { CardPage } from './pages/CardPage';
 import { ColoursPage } from './pages/ColoursPage';
+import { IconsPage } from './pages/IconsPage';
 import { IntroductionPage } from './pages/IntroductionPage';
 import { ProgressPage } from './pages/ProgressPage';
 import { TokensPage } from './pages/TokensPage';
@@ -54,6 +55,14 @@ export const pages: DocPage[] = [
     source: ['src/styles/tokens.css', 'src/styles/global.css'],
     keywords: 'type font text sf pro scale caps micro small',
     component: TypographyPage,
+  },
+  {
+    path: '/foundations/icons',
+    title: 'Icons',
+    section: 'Foundations',
+    source: ['src/assets/icons/', 'src/components/Icon/', 'scripts/icons/'],
+    keywords: 'icons iconography mingcute svg line fill glyph symbol arrow',
+    component: IconsPage,
   },
   {
     path: '/components/button',

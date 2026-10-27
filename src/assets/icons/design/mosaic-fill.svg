@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+<g transform="translate(-420 -270)">
+<g>
+<path d="M434 276H438V280H434V276Z" fill="currentColor"/>
+<path d="M430 284H426V288H430V284Z" fill="currentColor"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M423 275C423 273.895 423.895 273 425 273H439C440.105 273 441 273.895 441 275V289C441 290.105 440.105 291 439 291H425C423.895 291 423 290.105 423 289V275ZM439 275H433V281H439V275ZM425 283V289H431V283H425Z" fill="currentColor"/>
+</g>
+</g>
+</svg>

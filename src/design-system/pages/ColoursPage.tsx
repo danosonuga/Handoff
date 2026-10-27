@@ -1,5 +1,7 @@
 import type { CSSProperties } from 'react';
+import { CopyTooltip } from '../components/CopyTooltip/CopyTooltip';
 import { Callout, Code, Prose, Section, Table, PageTitle, UsedIn } from '../components/Doc/Doc';
+import { ExportBar } from '../components/ExportBar/ExportBar';
 import { colourFamily, contrastRating, contrastRatio, hexToRgb, rgbToHex, rgbToHsl, type Rgb } from '../lib/colour';
 import { findTranslucentColours, getToken, resolveValue, tokensWithPrefix } from '../lib/tokens';
 import styles from './Foundations.module.css';
@@ -51,7 +53,9 @@ function Swatch({ colour }: { colour: BaseColour }) {
   const { r, g, b } = colour.rgb;
   return (
     <figure className={styles.swatch}>
-      <div className={styles.swatchColour} style={{ background: colour.hex }} />
+      <CopyTooltip text={colour.hex} label={`Copy ${colour.hex}`} className={styles.swatchCopy}>
+        <span className={styles.swatchColour} style={{ background: colour.hex }} />
+      </CopyTooltip>
       <figcaption className={styles.swatchBody}>
         <span className={styles.swatchHex}>{colour.hex}</span>
         <span className={styles.swatchMeta}>
@@ -103,9 +107,12 @@ export function ColoursPage() {
       <Callout>
         <p>
           Generated from <Code>src/styles/tokens.css</Code>. Add or change a colour there and this page updates.
+          Click a swatch to copy its hex.
           Contrast ratios are WCAG 2.2, rated for normal-size text.
         </p>
       </Callout>
+
+      <ExportBar categories={['colour']} fileName="handoff-colour" subject="colour tokens" />
 
       {families.map(({ family, colours }) => (
         <Section key={family} title={family}>

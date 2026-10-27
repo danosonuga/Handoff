@@ -35,7 +35,8 @@ npm run preview  # serve the production build
 |---|---|
 | Foundations → Colours | Base palette (every distinct colour in `tokens.css`, grouped by hue), translucent colours, WCAG contrast of the text/surface pairs in use |
 | Foundations → Design Tokens | Naming, colour tokens by Figma collection, spacing, radius, elevation |
-| Foundations → Typography | SF Pro, weights, the six text styles with specimens |
+| Foundations → Icons | 1,214 Figma icons (Line + Fill): search, category and size filters, click to copy the import + JSX, SVG sprite / JSON export, usage rules |
+| Foundations → Typography | Clash Display + SF Pro, the full type scale (switchable weight), every style with its token and tracking, and the Figma label/style conflicts |
 | UI → Components → Button | Variants, states, custom properties, props, accessibility |
 | UI → Components → Card | Cause card variants, anatomy, building blocks, props |
 | UI → Components → Progress | `ProgressBar` states (default, empty, complete, over goal, live update, in a stat panel), anatomy, props |
@@ -45,6 +46,7 @@ npm run preview  # serve the production build
 - Token tables are parsed from `src/styles/tokens.css` (value and the Figma comment), and "Used in" is found by scanning every component's CSS for `var(--token)`. Change a token and the docs update.
 - Every example is a real file in `src/design-system/examples/`. It renders in the Preview tab, and its source (imported with `?raw`) is the Code tab.
 - The docs interface is styled with the design system itself: SF Pro at the system's weights, palette colours only, product spacing, radii and motion. Docs-only values (page-title sizes, wide gaps, tints) are in `src/design-system/docs-tokens.css`, and each is built from a product token.
+- **Exports:** Colours, Design Tokens and Typography each have an Export bar (Download CSS, Download JSON, Copy CSS). JSON follows the [W3C Design Tokens Format 2025.10](https://www.designtokens.org/) for Tokens Studio, Style Dictionary and Figma import tools. Each type style also has *Copy CSS* (tokens) and *Copy values* (plain CSS), and each colour swatch copies its hex. It's all generated from the parsed tokens (`src/design-system/lib/export.ts`). Motion tokens are left out because the transitions.dev licence doesn't allow republishing them.
 - Examples import with `@/…` (= `src/…`), declared in `tsconfig.json` `paths` and enabled by `resolve.tsconfigPaths` in `vite.config.ts`.
 
 To document a new component, add an example file, add a page in `src/design-system/pages/`, and register it in `src/design-system/pages.ts` (sidebar, search and prev/next all read that list).
@@ -180,7 +182,8 @@ src/
 │   ├── pages/                #   Introduction, Colours, Tokens, Typography, Button, Card, Progress
 │   ├── examples/             #   live examples; also shown as source in the Code tab
 │   ├── components/           #   docs chrome: DocsLayout, Search, Example, CodeBlock, Doc
-│   └── lib/                  #   tokens.css parser, colour/contrast maths, highlighter
+│   └── lib/                  #   tokens.css parser, colour/contrast maths, highlighter, exports
+scripts/icons/                # Figma icon manifest + extract-icons.mjs (cuts frame exports into SVGs)
 ├── App.tsx / App.module.css  # centres the card on a white page (the Figma canvas)
 ├── data/cause.ts             # sample content
 ├── styles/
@@ -188,6 +191,7 @@ src/
 │   ├── global.css            # reset, font, body background
 │   └── transitions.css       # transitions.dev recipes (global t-* classes)
 ├── assets/                   # images and icons, all committed
+│   └── icons/                #   1,214 icons from Figma Iconography (generated; see its README)
 └── components/
     ├── CauseCard/  CauseCardMedia/  Pill/  OrgLogo/  OrgByline/
     └── StatPanel/  ProgressBar/  Button/  Icon/  AnimatedNumber/
@@ -204,7 +208,7 @@ All tokens are in [`src/styles/tokens.css`](src/styles/tokens.css), each comment
 | Backgrounds | `--color-bg-{canvas,on-canvas,default,secondary}` | Figma `Background/*` |
 | Buttons | `--color-button-{primary,primary-clicked,disabled}` | Figma `Buttons/*` |
 | Card CTA | `--color-cta-volunteer` (#622efe), `--color-cta-volunteer-pressed`, `--shadow-cta-volunteer-inset` | #622efe is a raw Figma fill; **the pressed colour and shadow are derived** (see [Design provenance](#design-provenance)) |
-| Typography | `--type-{small-bold,button-large,micro-bold,micro-medium,micro-regular,caps}`, `--type-caps-tracking` | Figma text styles, written as the CSS `font` shorthand |
+| Typography | `--type-{h1…h6,section-header,large,small,micro,caption}-{bold,medium,regular}`, `--type-button-{large,medium,small}`, `--type-caps`, plus `-tracking` tokens where tracking isn't 0 | Figma Typography sheet 76:754 and card frame 24:247, written as the CSS `font` shorthand. Headings use `--font-family-display` (Clash Display); text uses `--font-family-base` (SF Pro) |
 | Spacing | `--space-{2,8,10,12,14,16}` | Auto-layout gaps and padding |
 | Radii | `--radius-{xs,md,lg,xl,track,full}` | 4 / 12 / 16 / 24 / 32 / 9999 px |
 | Elevation | `--shadow-{card,logo,button-inset}` | Figma drop shadows |
@@ -228,6 +232,17 @@ The Figma frames contain no motion; all animation is an addition using four [tra
 | 33 Text morph | `Button` label via `MorphText` (`t-morph`, `t-morph-swap`) | On click, "Join as a volunteer" → "Joined": "Join" stays, the rest cross-blurs (180ms) and the width eases (240ms). A project rule eases the button into its disabled colours over the same 240ms. | `--text-morph-*` |
 | 09 Icon swap | `Button` icon slots (`t-icon-swap`, `t-icon`) | On click, the trailing arrow swaps out and a check swaps in **before** the label (250ms, blur + scale). Project addition: each slot's width eases to or from 0 with the morph's timing, so the button resizes smoothly. | `--icon-swap-*` |
 
+**Design system docs motion** follows [Emil Kowalski's design engineering skills](https://github.com/emilkowalski/skills) (MIT), not transitions.dev. It was chosen with that library's `find-animation-opportunities` audit, which rejects motion on keyboard-driven, typing-driven and core-navigation surfaces. Its curves and durations are `--docs-*` tokens in `docs-tokens.css` (`--docs-ease-out: cubic-bezier(0.23, 1, 0.32, 1)`, `--docs-ease-in-out: cubic-bezier(0.77, 0, 0.175, 1)`, `--docs-ease-drawer: cubic-bezier(0.32, 0.72, 0, 1)`).
+
+| Interaction | Where | Behaviour |
+|---|---|---|
+| Click to copy | `CopyTooltip` (type specimens, swatches, icons) | On hover with a mouse, a "Copy" tooltip appears after 600ms and scales and fades in from the element (125ms ease-out, from 0.97). Once one is open, neighbours open and close instantly. Press scales the element to 0.97 (160ms). The label switches to "Copied" with no extra motion. Keyboard focus shows it instantly; touch shows "Copied" on tap. |
+| Press feedback | Every docs button, tab, chip, switch and sidebar link | `:active { transform: scale(0.97) }`, 160ms ease-out |
+| Selected indicator | Sidebar (`DocsLayout`) and switches (`SegmentedControl`) | A selected-style copy of the list, clipped to the current item (`useClipIndicator`). Moves with `clip-path` over 250ms ease-in-out, so background, colour and weight change as one. It snaps on first paint and when the layout changes. |
+| Mobile drawer | `DocsLayout` | Slides 300ms on the drawer curve; the scrim fades on the same timing, in and out |
+
+Under reduced motion, every scale and clip movement is removed; fades stay.
+
 **Adaptations from the recipes**
 
 - **The arrow only slides.** The recipe also spreads a two-path chevron's arms, but the Figma arrow is a single path. The arm rules are kept but match nothing.
@@ -243,6 +258,7 @@ The Figma frames contain no motion; all animation is an addition using four [tra
 | `V2` | 24:217 (card 24:247) | **Current design** |
 | `V1` | 15:3 (card 15:88) | Original baseline |
 | `Button` | 29:447 | Default / clicked / disabled states |
+| `Typography` | 76:754 | Type scale: H1–Section Header, Large–Caption, Buttons |
 
 **Figma → React** (V2 node IDs, with V1 IDs in brackets)
 
@@ -259,7 +275,7 @@ The Figma frames contain no motion; all animation is an addition using four [tra
 | `Button` instance 24:274 [15:140], states 29:323 / 29:336 / 29:404 | `Button` | Figma component instance; icon slots map to `leadingIcon` / `trailingIcon` |
 | `arrow/arrow_right_line` | `Icon` | |
 
-Code Connect isn't set up in the Figma file.
+Code Connect templates exist locally in `figma/`, but can't be published: Figma only allows Code Connect for libraries on Organization or Enterprise plans.
 
 **Substitutions and derived values**
 
@@ -272,6 +288,13 @@ Code Connect isn't set up in the Figma file.
   - **Progress fill** is raw `#ff7415` in Figma; mapped to `--color-bg-secondary` (same value).
 - **Rendering differences:**
   - **Font.** SF Pro isn't bundled, for licensing reasons. It loads from the system with fallbacks. Weights 510 and 590 are exact only on Apple platforms; elsewhere text may be slightly wider or narrower.
+  - **Heading font.** Clash Display (headings H1–Section Header) loads from Fontshare's stylesheet in `design-system/index.html`, because its licence doesn't allow redistributing the files. Any page that uses heading styles needs that `<link>`. The card uses none.
+- **Typography sheet (76:754) decisions:**
+  - **Families follow the sheet's labels** (Clash Display / SF Pro), by agreement. The styles applied in Figma use Instrument Sans / Inter.
+  - **Values follow the applied styles** where the labels disagree: H5 line height 36 (label 40), H6 tracking +0.4 (label −0.1), Large/Bold tracking 0 (label −0.1), Small/Bold +0.1 (label 0), Button/Medium 13/20 and Button/Small 12/18 with +0.1 tracking.
+  - **SF Pro weights are derived:** the sheet's Inter 600 / 500 map to SF Pro Semibold 590 / Medium 510, as the card frame uses.
+  - **The card is unchanged.** Its styles keep frame 24:247's bindings: the title doesn't apply `--type-small-bold-tracking`, and `--type-button-large` stays 590 14/22 (the sheet redefines Button/Large as 510 14/20 +0.1, but the Button component in Figma still binds the old style).
+  - `Micro/Bold` and `Large/Regular` specimens have no Figma style (raw values); `CAPS` isn't on the sheet and stays for the card.
   - **Button label** uses `text-box: trim-both cap alphabetic`, as Figma does. Browsers without support render up to about 1px off.
   - **Progress width** at 4 of 20 is 20%, about 10px wider than Figma's one-sixth segment.
 - **Kept as-is:**
@@ -287,7 +310,8 @@ Code Connect isn't set up in the Figma file.
 | `verified-badge.svg` | Figma `Badge` export (multi-colour; rendered as `<img>`) |
 | `arrow-right.svg` | Figma `arrow/arrow_right_line` export |
 | `check.svg` | Figma `system/check_fill` (path from the verified badge's check, node 24:259), shown at 16px in the joined button |
-| `image-icon.svg` | MingCute `file/pic_line` |
+| `image-icon.svg` | MingCute `file/pic_line` (now also in the Figma Iconography section, 78:3495) |
+| `icons/**` | Figma Iconography (78:1625), cut per icon by `scripts/icons/extract-icons.mjs`; MingCute, Apache-2.0 |
 
 ### Licences
 
